@@ -1,6 +1,31 @@
 @import "./tools/swatches.css";
 
-h1 {
-  color: var(--color1);
-  font-family: cursive;
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.cards-wrapper {
+  width: 100%;
+
+  & .cards-inner {
+    border-bottom: 2px solid var(--color-border);
+    display: flex;
+    overflow-x: auto;
+    gap: var(--space-1);
+    padding: var(--space-1);
+
+    & .card {
+      height: 160px;
+      width: 200px;
+      border: 2px solid var(--color-border);
+      flex-shrink: 0;
+
+      &:hover {
+        border-color: var(--color-highlight);
+      }
+    }
+    
+  }
+
 }
