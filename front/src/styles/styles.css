@@ -1,4 +1,6 @@
+@import "./tools/swatches.css";
+
 h1 {
-  color: hotpink;
+  color: var(--color1);
   font-family: cursive;
 }
