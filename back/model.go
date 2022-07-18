@@ -47,4 +47,3 @@ type SlotDB struct {
 	PageId uuid.UUID
 	Page PageDB
 }
-
