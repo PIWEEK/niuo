@@ -1,0 +1,27 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+  # server:
+  #   image: golang:1.8
+    
+  db:
+    image: postgres
+    restart: always
+
+    environment:
+      POSTGRES_USER: niuo
+      POSTGRES_PASSWORD: niuo
+      POSTGRES_DB: niuo
+
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+    volumes:
+      -  db-data:/var/lib/postgresql/data/pgdata
+
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:
+    # external: true
