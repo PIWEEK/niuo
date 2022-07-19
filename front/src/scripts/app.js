@@ -15,6 +15,13 @@ const initMainCard = () => {
   buildCoverPage();
 };
 
+const initPrintListener = () => {
+  const printBtn = document.querySelector('[data-query="print-btn"]');
+  printBtn.addEventListener("click", () => {
+    print();
+  });
+};
+
 const buildMainCard = (event) => {
   const type = event.currentTarget.getAttribute("data-type");
   const index = event.currentTarget.getAttribute("data-index");
@@ -75,6 +82,7 @@ const init = () => {
 
   initMainCard();
   initCardListener();
+  initPrintListener();
 };
 
 init();
