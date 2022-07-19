@@ -1,8 +1,37 @@
 @import "./tools/swatches.css";
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.font-regular {
+
+}
+.font-ligature {
+  font-family: Sofia;
+}
+.fs-1 {
+  font-size: 1em;
+}
+.fs-2 {
+  font-size: 2em;
+}
+.fs-3 {
+  font-size: 3em;
+}
+.fs-4 {
+  font-size: 4em;
+}
+.fs-5 {
+  font-size: 5em;
 }
 
 .cards-wrapper {
@@ -23,6 +52,29 @@ body {
 
       &:hover {
         border-color: var(--color-highlight);
+      }
+    }
+    
+  }
+
+}
+
+.body-wrapper {
+  flex-grow : 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .body-inner {
+    width: 800px;
+
+    & .body-content {      
+      border: 2px solid var(--color-border);
+      padding: var(--space-2);
+
+      & p {
+        margin: 0;
       }
     }
     
