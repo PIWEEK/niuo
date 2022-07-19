@@ -10,6 +10,7 @@ body {
   display: flex;
   flex-flow: column;
   height: 100%;
+  font-family: Source Sans Pro;
 }
 
 .font-regular {
@@ -52,6 +53,7 @@ body {
 
       &:hover {
         border-color: var(--color-highlight);
+        cursor: pointer;
       }
     }
     
@@ -69,9 +71,17 @@ body {
   & .body-inner {
     width: 800px;
 
+    & .page {
+      font-style: italic;
+      font-size: 1.4em;
+      margin-bottom: 0.2em;
+    }
+
     & .body-content {      
       border: 2px solid var(--color-border);
       padding: var(--space-2);
+      text-align: center;
+      height: 566px;
 
       & p {
         margin: 0;
@@ -80,4 +90,10 @@ body {
     
   }
 
+}
+
+.tpl-intro {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
