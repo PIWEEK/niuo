@@ -7,6 +7,7 @@ import {
   randFutureDate,
   randCountry,
   randFullName,
+  randNumber,
 } from "@ngneat/falso";
 
 const generateImgSlot = () => {
@@ -30,7 +31,7 @@ const pageMock = {
   dateStart: randSoonDate(),
   dateFinish: randFutureDate(),
   destination: randCountry(),
-  people: [randFullName(), randFullName(), randFullName(), randFullName()],
+  people: [randFullName(), randFullName(), randFullName()],
   pages: [
     {
       type: "cover",

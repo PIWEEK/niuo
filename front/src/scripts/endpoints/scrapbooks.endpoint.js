@@ -36,17 +36,17 @@ const createScrapbook = (data) => {
 const getScrapbook = (id) => {
   // const url = `${config.apiUrl}/scrapbooks/${id}`;
 
-  // fetch(url)
+  // await fetch(url)
   //   .then((res) => res.json())
   //   .catch((error) => console.error("Error:", error))
   //   .then((response) => console.log("Success:", response));
   return pageMock;
 };
 
-const modifyScrapbook = (id, data) => {
+const modifyScrapbook = async (id, data) => {
   const url = `${config.apiUrl}/scrapbooks/${id}`;
 
-  fetch(url, {
+  await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
   })
