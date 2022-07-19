@@ -9,6 +9,12 @@ const initCardListener = () => {
   });
 };
 
+const initMainCard = () => {
+  setPageIndex(0);
+  setPageClass("cover");
+  buildCoverPage();
+};
+
 const buildMainCard = (event) => {
   const type = event.currentTarget.getAttribute("data-type");
   const index = event.currentTarget.getAttribute("data-index");
@@ -16,11 +22,13 @@ const buildMainCard = (event) => {
   switch (type) {
     case "cover":
       setPageIndex(index);
-      buildCoverPage(index, type);
+      setPageClass(type);
+      buildCoverPage();
       break;
 
     case "activity_checklist":
       setPageIndex(index);
+      setPageClass(type);
       break;
 
     default:
@@ -35,13 +43,14 @@ const setPageIndex = (index) => {
   pageIndexEl.textContent = `Página ${indexNum}`;
 };
 
-const buildCoverPage = (index, type) => {
-  const page = scrapbook.pages[index];
-  console.log({ page });
+const setPageClass = (type) => {
   const pageCard = document.querySelector('[data-query="template-card"]');
   pageCard.classList.remove();
   pageCard.classList.add("body-content", `tpl-${type}`);
+};
 
+const buildCoverPage = () => {
+  const pageCard = document.querySelector('[data-query="template-card"]');
   const coverPage = `
     <p class="font-ligature fs-3">Mi viaje a</p>
     <p class="font-ligature fs-5">${scrapbook.destination}</p>
@@ -64,6 +73,7 @@ const init = () => {
     pagesList.append(pageEl);
   });
 
+  initMainCard();
   initCardListener();
 };
 
