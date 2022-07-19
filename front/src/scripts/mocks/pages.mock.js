@@ -1,4 +1,13 @@
-import { rand, randWord, randImg } from "@ngneat/falso";
+import {
+  rand,
+  randWord,
+  randImg,
+  randUuid,
+  randSoonDate,
+  randFutureDate,
+  randCountry,
+  randFullName,
+} from "@ngneat/falso";
 
 const generateImgSlot = () => {
   const image = ["empty", randImg()];
@@ -15,78 +24,86 @@ const generateTxtSlot = () => {
   };
 };
 
-const pageMock = [
-  {
-    type: "cover",
-  },
-  {
-    type: "activity_checklist",
-    slots: [
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-    ],
-  },
-  {
-    type: "activity_checklist",
-    slots: [
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-    ],
-  },
-  {
-    type: "activity_checklist",
-    slots: [
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-    ],
-  },
-  {
-    type: "activity_checklist",
-    slots: [
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-      generateImgSlot(),
-      generateTxtSlot(),
-    ],
-  },
-];
+const pageMock = {
+  id: randUuid(),
+  name: randWord(),
+  dateStart: randSoonDate(),
+  dateFinish: randFutureDate(),
+  destination: randCountry(),
+  people: [randFullName(), randFullName(), randFullName(), randFullName()],
+  pages: [
+    {
+      type: "cover",
+    },
+    {
+      type: "activity_checklist",
+      slots: [
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+      ],
+    },
+    {
+      type: "activity_checklist",
+      slots: [
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+      ],
+    },
+    {
+      type: "activity_checklist",
+      slots: [
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+      ],
+    },
+    {
+      type: "activity_checklist",
+      slots: [
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+        generateImgSlot(),
+        generateTxtSlot(),
+      ],
+    },
+  ],
+};
 
 export { pageMock };
