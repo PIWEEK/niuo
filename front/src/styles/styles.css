@@ -67,6 +67,11 @@ header {
   overflow: auto;
   flex-shrink: 0;
 
+  & .cards-info {
+    list-style: none;
+    padding-left: var(--space-1);
+  }
+
   & .cards-inner {
     display: flex;
     flex-flow: column;
