@@ -25,5 +25,5 @@ func (a *App) Start(addr string) {
 func main() {
 	a := App{}
 	a.Init()
-	a.Start("0.0.0.0:8000")
+	a.Start(":8000")
 }

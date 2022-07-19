@@ -26,6 +26,10 @@ type ScrapbookDB struct {
 	Base
 
 	Name string
+	Place string
+	DateStart time.Time
+	DateEnd time.Time
+	People []string `gorm:"type:text[]"`
 
 	UserID uuid.UUID
 	User UserDB `gorm:"foreignKey:UserID"`
