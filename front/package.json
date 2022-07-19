@@ -38,6 +38,7 @@
     }
   },
   "dependencies": {
+    "@ngneat/falso": "^6.0.3",
     "gutenberg-css": "^0.6.1"
   }
 }
