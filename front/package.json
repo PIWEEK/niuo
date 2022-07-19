@@ -36,5 +36,8 @@
       "nesting": true,
       "customMedia": true
     }
+  },
+  "dependencies": {
+    "gutenberg-css": "^0.6.1"
   }
 }
