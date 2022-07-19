@@ -2,10 +2,15 @@
 version: '3.9'
 
 services:
-  # server:
-  #   image: golang:1.8
+  server:
+    image: golang:1.18
+    ports:
+      - 8000:8000
+    volumes:
+      - ..:/app
+    command: /bin/bash -c "(cd /app && go run .)"
     
-  db:
+  postgres:
     image: postgres
     restart: always
 

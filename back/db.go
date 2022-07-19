@@ -8,7 +8,7 @@ import (
 )
 
 func (a *App) initDatabase() {
-	dsn := "host=localhost user=niuo password=niuo dbname=niuo"
+	dsn := "host=postgres user=niuo password=niuo dbname=niuo"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
