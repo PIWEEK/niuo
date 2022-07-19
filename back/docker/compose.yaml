@@ -2,8 +2,20 @@
 version: '3.9'
 
 services:
-  # server:
-  #   image: golang:1.8
+  server:
+    image: cosmtrek/air
+    working_dir: /app
+
+    ports:
+      - 8000:8000
+
+    volumes:
+      - ..:/app
+
+    command: go run .
+
+    environment:
+      NIUO_DB_HOST: postgres
     
   db:
     image: postgres
@@ -20,7 +32,7 @@ services:
       -  db-data:/var/lib/postgresql/data/pgdata
 
     ports:
-      - 5432:5432
+      - 15432:5432
 
 volumes:
   db-data:

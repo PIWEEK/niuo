@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gorm.io/gorm"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -19,6 +20,7 @@ func (a *App) Init() (err error){
 }
 
 func (a *App) Start(addr string) {
+	fmt.Printf("Listening %s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }
 

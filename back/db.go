@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"fmt"
 	"github.com/google/uuid"
 	"gorm.io/driver/postgres"
@@ -8,7 +9,32 @@ import (
 )
 
 func (a *App) initDatabase() {
-	dsn := "host=localhost user=niuo password=niuo dbname=niuo"
+	host, ok := os.LookupEnv("NIUO_DB_HOST")
+	if !ok {
+		host = "localhost"
+	}
+
+	user, ok := os.LookupEnv("NIUO_DB_USER")
+	if !ok {
+		user = "niuo"
+	}
+
+	password, ok := os.LookupEnv("NIUO_DB_PASSWORD")
+	if !ok {
+		password = "niuo"
+	}
+
+	dbname, ok := os.LookupEnv("NIUO_DB_DBNAME")
+	if !ok {
+		dbname = "niuo"
+	}
+
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s",
+		host, user, password, dbname)
+
+	fmt.Printf("Connecting to %s\n", dsn)
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
