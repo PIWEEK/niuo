@@ -2,6 +2,7 @@
 
 html {
   height: 100%;
+  color: var(--color-dark);
 }
 
 body {
@@ -11,6 +12,7 @@ body {
   flex-flow: column;
   height: 100%;
   font-family: Source Sans Pro;
+  background-color: var(--color-background);
 }
 
 .font-ligature {
@@ -33,10 +35,10 @@ body {
 }
 
 header {
-  background-color: bisque;
   width: 100%;
   height: var(--header-height);
   flex-shrink: 0;
+  border-bottom: 1px solid var(--color-highlight);
 }
 .content {
   flex-grow : 1;
@@ -81,7 +83,7 @@ header {
   justify-content: center;
 
   & .body-inner {
-    width: 800px;
+    width: 920px;
 
     & .page {
       font-style: italic;
@@ -91,10 +93,12 @@ header {
 
     & .body-content {
       position: relative;
-      border: 2px solid var(--color-border);
+      border: 1px solid var(--color-border);
+      background-color: white;
+      border-radius: 4px;
       padding: var(--space-2);
       text-align: center;
-      height: 566px;
+      height: 650px;
 
       & p {
         margin: 0;
@@ -116,4 +120,18 @@ header {
   display: flex;
   flex-flow: column;
   justify-content: center;
+}
+
+.button {
+  background-color: var(--color-highlight);
+  border-radius: 4px;
+  height: 36px;
+  padding-right: var(--space-1);
+  padding-left: var(--space-1);
+  cursor: pointer;
+  appearance: none;
+  align-items: center;
+  text-align: center;
+  transition: all 0.4s;
+  border: none;
 }
