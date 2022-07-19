@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func (a *App) initDatabase() {
@@ -118,6 +119,14 @@ func (a *App) retrievePages(scrapbookId uuid.UUID) []PageDB {
 	return pages
 }
 
+func (a *App) retrievePageByNumber(scrapbookId uuid.UUID, pageNumber int) PageDB {
+	var page PageDB
+	a.DB.
+		Where("scrapbook_id = ? and page_dbs.order = ?", scrapbookId, pageNumber).
+		First(&page)
+	return page
+}
+
 func (a *App) retrieveSlots(scrapbookId uuid.UUID) []SlotDB {
 	var slots []SlotDB
 
@@ -142,4 +151,16 @@ func (a *App) getLastPageOrder(scrapbookId uuid.UUID) int {
 	}
 
 	return page.Order
+}
+
+func (a *App) saveSlotImage(slotImage *SlotImageDB) {
+	a.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Create(slotImage)
+}
+
+func (a *App) getSlotImage(slotImage *SlotImageDB, pageId uuid.UUID, slot int){
+	a.DB.
+		Where("page_id = ? and slot = ?", pageId, slot).
+		First(&slotImage)
 }

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io"
+	"strconv"
 	"context"
 	"encoding/json"
 	"github.com/google/uuid"
@@ -94,6 +96,8 @@ func (a *App) initRoutes() {
 
 	// Slots
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/image", a.SetSlotImage).Methods("POST")
+		apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/image", a.GetSlotImage).Methods("GET")
+
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/text", a.SetSlotText).Methods("POST")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/data", a.SetSlotData).Methods("POST")
 
@@ -214,6 +218,66 @@ func (a *App) DeleteScrapbook(w http.ResponseWriter, r *http.Request) {}
 func (a *App) UpdateScrapbook(w http.ResponseWriter, r *http.Request) {}
 func (a *App) UpdateScrapbookPage(w http.ResponseWriter, r *http.Request) {}
 func (a *App) DeleteScrapbookPage(w http.ResponseWriter, r *http.Request) {}
-func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {}
+
+func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		vars := mux.Vars(r)
+
+		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
+		slot, _ := strconv.Atoi(vars["slot"])
+
+		page := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+
+		file, fileHeader, err := r.FormFile("file")
+
+		fileName := fileHeader.Filename
+		size := fileHeader.Size
+
+		if err != nil {
+			respondWithError(w, 404, "Cannot read the file")
+			return
+		}
+
+		defer file.Close()
+
+		data, err := io.ReadAll(file)
+
+		if err != nil {
+			respondWithError(w, 404, "Cannot read the file data")
+			return
+		}
+
+		slotImage := SlotImageDB {
+		  PageId: page.ID,
+			Slot: slot,
+			Data: data,
+		}
+
+		a.saveSlotImage(&slotImage)
+		respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })
+	}
+}
+
+func (a *App) GetSlotImage(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		vars := mux.Vars(r)
+
+		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
+		slot, _ := strconv.Atoi(vars["slot"])
+
+		page := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+
+		var slotImage SlotImageDB
+		a.getSlotImage(&slotImage, page.ID, slot)
+
+		w.WriteHeader(200)
+		w.Write(slotImage.Data)
+	}
+}
+
 func (a *App) SetSlotText(w http.ResponseWriter, r *http.Request) {}
 func (a *App) SetSlotData(w http.ResponseWriter, r *http.Request) {}
