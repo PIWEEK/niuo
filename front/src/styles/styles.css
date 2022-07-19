@@ -13,9 +13,6 @@ body {
   font-family: Source Sans Pro;
 }
 
-.font-regular {
-
-}
 .font-ligature {
   font-family: Sofia;
 }
@@ -35,12 +32,27 @@ body {
   font-size: 5em;
 }
 
-.cards-wrapper {
+header {
+  background-color: bisque;
   width: 100%;
+  height: var(--header-height);
+  flex-shrink: 0;
+}
+.content {
+  flex-grow : 1;
+  width: 100%;
+  display: flex;
+}
+
+.cards-wrapper {
+  border-right: 2px solid var(--color-border);
+  max-height: calc(100vh - var(--header-height));
+  overflow: auto;
+  flex-shrink: 0;
 
   & .cards-inner {
-    border-bottom: 2px solid var(--color-border);
     display: flex;
+    flex-flow: column;
     overflow-x: auto;
     gap: var(--space-1);
     padding: var(--space-1);
