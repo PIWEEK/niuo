@@ -17,7 +17,7 @@ services:
     environment:
       NIUO_DB_HOST: postgres
     
-  db:
+  postgres:
     image: postgres
     restart: always
 

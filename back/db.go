@@ -48,6 +48,7 @@ func (a *App) initDatabase() {
 		&ScrapbookDB{},
 		&PageDB{},
 		&SlotDB{},
+		&SlotImageDB{},
 	)
 }
 
@@ -86,4 +87,59 @@ func (a *App) createUser() UserDB {
 
 func (a *App) saveScrapbook(s *ScrapbookDB) {
 	a.DB.Create(&s)
+}
+
+func (a *App) savePage(p *PageDB) {
+	a.DB.Create(&p)
+}
+
+func (a *App) saveSlot(s *SlotDB) {
+	a.DB.Create(&s)
+}
+
+func (a *App) saveSlots(slots []SlotDB) {
+	for _, slot := range slots {
+		a.saveSlot(&slot)
+	}
+}
+
+func (a *App) retrieveScrapbookById(scrapbookId uuid.UUID) (ScrapbookDB, error) {
+	scrapbook := ScrapbookDB{}
+	result := a.DB.First(&scrapbook, scrapbookId)
+	return scrapbook, result.Error
+}
+
+func (a *App) retrievePages(scrapbookId uuid.UUID) []PageDB {
+	var pages []PageDB
+	a.DB.
+		Where("scrapbook_id = ?", scrapbookId).
+		Order("page_dbs.Order asc").
+		Find(&pages)
+	return pages
+}
+
+func (a *App) retrieveSlots(scrapbookId uuid.UUID) []SlotDB {
+	var slots []SlotDB
+
+	a.DB.
+		Joins("JOIN page_dbs ON page_dbs.id = slot_dbs.page_id and page_dbs.scrapbook_id = ?", scrapbookId).
+		Order("slot_dbs.num_slot asc").
+		Where("scrapbook_id = ?", scrapbookId).Find(&slots)
+
+	return slots
+}
+
+func (a *App) getLastPageOrder(scrapbookId uuid.UUID) int {
+	var page PageDB
+
+	result := a.DB.
+		Where("scrapbook_id = ?", scrapbookId).
+		Order("page_dbs.Order desc").
+		First(&page)
+
+	if result.Error != nil {
+		return 0
+	}
+
+	return page.Order
 }

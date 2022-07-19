@@ -131,20 +131,87 @@ func (a *App) CreateScrapbook(w http.ResponseWriter, r *http.Request) {
 	user, ok := r.Context().Value("user").(UserDB)
 
 	if ok && decode(w, r, &s) {
-		scrapbook := s.parse()
+		scrapbook := s.Parse()
 		scrapbook.User = user
 
 		a.saveScrapbook(&scrapbook)
 		result := scrapbook.FormatBasic()
 		respondWithJSON(w, 200, result)
 	}
-
 }
 
-func (a *App) GetScrapbookDetail(w http.ResponseWriter, r *http.Request) {}
+func (a *App) findScrapbook(w http.ResponseWriter, r *http.Request) (ScrapbookDB, bool) {
+	vars := mux.Vars(r)
+	scrapbookId, err := uuid.Parse(vars["scrapbookId"])
+
+	if err != nil {
+		respondWithError(w, 400, "Cannot decode id")
+		return ScrapbookDB{}, false
+	}
+
+	scrapbook, err := a.retrieveScrapbookById(scrapbookId)
+
+	if err != nil {
+		respondWithError(w, 404, "Not found")
+		return scrapbook, false
+	}
+
+	return scrapbook, true
+}
+
+func (a *App) GetScrapbookDetail(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		pages := a.retrievePages(scrapbook.ID)
+		slots := a.retrieveSlots(scrapbook.ID)
+		result := scrapbook.FormatAdvanced(pages, slots)
+		respondWithJSON(w, 200, result)
+	}
+}
+
+func (a *App) CreateSlots(pageType string) []SlotDataInput {
+
+	switch pageType {
+	case "activity_checklist":
+		return []SlotDataInput {
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+		}
+	default:
+		return []SlotDataInput {}
+	}
+}
+
+func (a *App) AddScrapbookPage(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+	var p PageDataInput
+
+	if ok && decode(w, r, &p){
+		lastPageOrder := a.getLastPageOrder(scrapbook.ID)
+		page := p.Parse()
+		page.Order = lastPageOrder + 1
+		slots := a.CreateSlots(page.Type)
+		page.ScrapbookID = scrapbook.ID
+
+		a.savePage(&page)
+		slotsdb := ParseSlotList(page.ID, slots)
+
+		a.saveSlots(slotsdb)
+		a.GetScrapbookDetail(w, r)
+	}
+}
+
 func (a *App) DeleteScrapbook(w http.ResponseWriter, r *http.Request) {}
 func (a *App) UpdateScrapbook(w http.ResponseWriter, r *http.Request) {}
-func (a *App) AddScrapbookPage(w http.ResponseWriter, r *http.Request) {}
 func (a *App) UpdateScrapbookPage(w http.ResponseWriter, r *http.Request) {}
 func (a *App) DeleteScrapbookPage(w http.ResponseWriter, r *http.Request) {}
 func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {}

@@ -17,21 +17,27 @@ type ScrapbookDataOutputBasic struct {
 type ScrapbookDataOutputDetail struct {
 	ScrapbookDataOutputBasic
 
-	Pages []PagesDataOutput `json:"pages"`
+	Pages []PageDataOutput `json:"pages"`
 }
 
-type PagesDataInput struct {
+type PageDataInput struct {
 	Type string `json:"type"`
+	Order int `json:"order"`
 }
 
-type PagesDataOutput struct {
-	PagesDataInput
+type PageDataOutput struct {
+	PageDataInput
 
 	ID string `json:"id"`
 	Slots []SlotDataOutput `json:"slots"`
 }
 
-type SlotDataOutput struct {
+type SlotDataInput struct {
 	Type string `json:"type"`
+	Slot int `json:"slot"`
+}
+
+type SlotDataOutput struct {
+	SlotDataInput
 	State string `default:"EMPTY" json:"state"`
 }

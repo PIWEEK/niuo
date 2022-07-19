@@ -42,12 +42,23 @@ type PageDB struct {
 	Order int
 
 	ScrapbookID uuid.UUID
-	Scrapbook ScrapbookDB
+	Scrapbook ScrapbookDB `gorm:"foreignKey:ScrapbookID"`
 }
 
 type SlotDB struct {
 	Base
 
+	NumSlot int
+	Type string
+	Status string
+
 	PageId uuid.UUID
-	Page PageDB
+	Page PageDB `gorm:"foreignKey:PageId"`
+}
+
+type SlotImageDB struct {
+	PageId uuid.UUID `gorm:"primaryKey"`
+	Slot int         `gorm:"primaryKey"`
+
+	Data []byte `gorm:"type:bytea"`
 }
