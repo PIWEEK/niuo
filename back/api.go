@@ -70,7 +70,6 @@ func (a *App) CORSMiddleware(h http.Handler) http.Handler {
 	})
 }
 
-
 func (a *App) initRoutes() {
 	a.Router = mux.NewRouter()
 
@@ -106,17 +105,42 @@ func (a *App) LoadFixtures(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) RetrieveScrapbooks(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	user, ok := ctx.Value("user").(UserDB)
+	user, ok := r.Context().Value("user").(UserDB)
 
 	if !ok {
 		respondWithError(w, 400, "Not authorized")
+		return
 	}
+
 	scrapbooks := a.retrieveScrapbooks(user)
-	respondWithJSON(w, 200, scrapbooks);
+	respondWithJSON(w, 200, FormatScrapbooksList(scrapbooks));
 }
 
-func (a *App) CreateScrapbook(w http.ResponseWriter, r *http.Request) {}
+func decode(w http.ResponseWriter, r *http.Request, result interface{}) bool {
+	err := json.NewDecoder(r.Body).Decode(result)
+
+	if err != nil {
+		respondWithError(w, 400, "Cannot decode body")
+	}
+	return err == nil
+}
+
+func (a *App) CreateScrapbook(w http.ResponseWriter, r *http.Request) {
+	var s ScrapbookDataInput
+
+	user, ok := r.Context().Value("user").(UserDB)
+
+	if ok && decode(w, r, &s) {
+		scrapbook := s.parse()
+		scrapbook.User = user
+
+		a.saveScrapbook(&scrapbook)
+		result := scrapbook.FormatBasic()
+		respondWithJSON(w, 200, result)
+	}
+
+}
+
 func (a *App) GetScrapbookDetail(w http.ResponseWriter, r *http.Request) {}
 func (a *App) DeleteScrapbook(w http.ResponseWriter, r *http.Request) {}
 func (a *App) UpdateScrapbook(w http.ResponseWriter, r *http.Request) {}

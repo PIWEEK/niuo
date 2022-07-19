@@ -57,3 +57,7 @@ func (a *App) createUser() UserDB {
 	a.DB.Create(&user)
 	return user
 }
+
+func (a *App) saveScrapbook(s *ScrapbookDB) {
+	a.DB.Create(&s)
+}
