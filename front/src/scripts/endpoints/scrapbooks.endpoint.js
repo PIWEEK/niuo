@@ -1,4 +1,5 @@
 import { config } from "../../assets/config";
+import { pageMock } from "../mocks/pages.mock";
 
 // # Scrapbook data model
 
@@ -33,12 +34,13 @@ const createScrapbook = (data) => {
 };
 
 const getScrapbook = (id) => {
-  const url = `${config.apiUrl}/scrapbooks/${id}`;
+  // const url = `${config.apiUrl}/scrapbooks/${id}`;
 
-  fetch(url)
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+  // fetch(url)
+  //   .then((res) => res.json())
+  //   .catch((error) => console.error("Error:", error))
+  //   .then((response) => console.log("Success:", response));
+  return pageMock;
 };
 
 const modifyScrapbook = (id, data) => {
