@@ -1,4 +1,4 @@
-import { uploadImage } from "../endpoints/slots.endpoint";
+import { uploadImage, uploadText } from "../endpoints/slots.endpoint";
 
 const initInputListeners = (element) => {
   const textSlots = element.querySelectorAll(
@@ -19,22 +19,21 @@ const initInputListeners = (element) => {
   });
 };
 
-const updateTextSlot = (event) => {
-  // Update database
-  console.log({
-    target: event.currentTarget,
-    value: event.currentTarget.value,
-    index: event.currentTarget.getAttribute("data-index"),
-  });
-};
-
-const updateImageSlot = async (event) => {
-  console.log(event.currentTarget);
+const updateTextSlot = async (event) => {
+  console.log(event);
   const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
   const page = event.currentTarget.getAttribute("data-page");
   const index = event.currentTarget.getAttribute("data-index");
-  const element = event.currentTarget.value;
-  await uploadImage(scrapbook, page, index, element);
+  const text = event.currentTarget.value;
+  await uploadText(scrapbook, page, index, text);
+};
+
+const updateImageSlot = async (event) => {
+  const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
+  const page = event.currentTarget.getAttribute("data-page");
+  const index = event.currentTarget.getAttribute("data-index");
+  const image = event.currentTarget.value;
+  await uploadImage(scrapbook, page, index, image);
 };
 
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
@@ -90,6 +89,8 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl.classList.add("text");
       slotEl.setAttribute("type", "text");
       slotEl.setAttribute("data-query", "checklist-slot-input-text");
+      slotEl.setAttribute("data-scrapbook", scrapbook.id);
+      slotEl.setAttribute("data-page", pageIndex);
       slotEl.setAttribute("data-index", index);
       slotEl.value = slot.text;
     }

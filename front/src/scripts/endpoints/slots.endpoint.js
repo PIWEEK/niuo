@@ -27,16 +27,16 @@ const uploadImage = async (scrapbookId, pageId, slotId, image) => {
   return res.json();
 };
 
-const uploadText = (scrapbookId, pageId, slotId, text) => {
+const uploadText = async (scrapbookId, pageId, slotId, text) => {
   const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}/${slotId}/text`;
 
-  fetch(url, {
+  const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(text),
-  })
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+    ...options,
+  });
+
+  return await res.json();
 };
 
 const uploadData = (scrapbookId, pageId, slotId, data) => {
