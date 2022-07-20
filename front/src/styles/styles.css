@@ -86,11 +86,12 @@ header {
   top: 0;
   left: 0;
 
-  & li {
+  & .scrapbook {
     list-style: none;
 
     & a {
       display: flex;
+      flex-direction: column;
       position: relative;
       height: 240px;
       width: 200px;
@@ -98,6 +99,25 @@ header {
       background-color: white;
       border-radius: 4px;
       flex-shrink: 0;
+      text-decoration: none;
+      color: var(--color-dark);
+      transition: box-shadow 0.3s;
+
+      & img {
+        width: 186px;
+        height: 131px;
+        align-self: center;
+      }
+
+      & .cards-info {
+        list-style: none;
+        padding: 16px;
+      }
+
+      &:hover {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 1px var(--color-primary);
+      }
     }
 
   }
