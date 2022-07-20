@@ -1,11 +1,10 @@
 package server
 
 type ScrapbookDataInput struct {
-	Name string `json:"name"`
-	Place string `json:"place"`
-	DateStart string `json:"dateStart"`
-	DateEnd string `json:"dateEnd"`
-	People []string `json:"people"`
+	Name  string `json:"name"`
+	Where string `json:"where"`
+	When  string `json:"when"`
+	Who   string `json:"who"`
 }
 
 type ScrapbookDataOutputBasic struct {

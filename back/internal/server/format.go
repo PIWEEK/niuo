@@ -7,10 +7,9 @@ func (s ScrapbookDB) FormatBasic() ScrapbookDataOutputBasic {
 	return ScrapbookDataOutputBasic {
 		ScrapbookDataInput: ScrapbookDataInput {
 			Name: s.Name,
-			Place: s.Place,
-			DateStart: s.DateStart.String(),
-			DateEnd: s.DateEnd.String(),
-			People: s.People,
+			Where: s.Where,
+			When: s.When,
+			Who: s.Who,
 		},
 
 		ID: s.ID.String(),

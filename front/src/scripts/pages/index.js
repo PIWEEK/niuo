@@ -11,12 +11,11 @@ const addScrapbookToList = (sb) => {
 };
 
 const loadScrapbooks = async () => {
-  console.log("loadScrapbooks");
-
   const newScrapbookBtn = document.getElementById("newScrapbookBtn");
   newScrapbookBtn.addEventListener("click", handleNewScrapbook);
 
   const scrapbooks = await listScrapbooks();
+  console.log(scrapbooks);
 
   for (sb of scrapbooks) {
     addScrapbookToList(sb);
@@ -28,7 +27,9 @@ const handleNewScrapbook = async (event) => {
   
   const sb = await createScrapbook({
     name: "Mi viaje",
-    place: "Desconocido"
+    who: "Alguien",
+    where: "En algún sitio",
+    when: "En algún momento",
   });
 
   location.href = `/composer.html?id=${sb.id}`;
