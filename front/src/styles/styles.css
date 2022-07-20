@@ -316,7 +316,6 @@ header {
 .cards-wrapper .cards-inner .new-card-popup {
   background: white;
   border: 1px solid var(--color-stroke);
-  bottom: 200px;
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(2, 1fr);
@@ -329,6 +328,7 @@ header {
   z-index: 10;
   border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
+  margin-top: -200px;
 
   &::before {
     content: " ";
@@ -341,7 +341,7 @@ header {
     transform: rotate(45deg);
     border: 1px solid var(--color-stroke);
     box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
-    clip-path: path('M 0,0 L22,22, L0,22 Z');
+    clip-path: path("M 0 0 L 22 22 L 0 22 Z")
   }
 
   & button.card {
