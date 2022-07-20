@@ -37,7 +37,7 @@ body {
 
 header {
   width: 100%;
-  height: var(--header-height);
+  height: calc(var(--header-height) - 1px);
   flex-shrink: 0;
   border-bottom: 1px solid var(--color-highlight);
   display: flex;
@@ -104,7 +104,6 @@ header {
 
 }
 
-
 .content-composer {
   width: 100%;
   display: flex;
@@ -170,7 +169,7 @@ header {
   flex-grow: 1;
   display: flex;
   align-items: center;
-  overflow: scroll;
+  overflow: auto;
   padding-inline-end: 2rem;
 
   & .body-inner {
@@ -262,7 +261,7 @@ header {
   appearance: none;
   align-items: center;
   text-align: center;
-  transition: all 0.3s;
+  transition: background-color 0.3s;
   border: none;
   text-decoration: none;
 
