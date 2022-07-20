@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <include src="src/components/header.html" locals='{
+    "title": "Niuo | Composer",
+    "description": "Editable scrapbook"
+  }'>
+  </include>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <!-- <link rel="stylesheet" href="styles/print.css" media="print" /> -->
+  <script type="module" src="scripts/app.js"></script>
+  <script type="module" src="scripts/pages/composer.js"></script>
+</head>
+
+<body>
+  <include src="src/components/top-nav.html"></include>
+
+  <div class="content">
+
+    <section class="cards-wrapper">
+      <ul class="cards-info" data-query="scrapbook-data">
+      </ul>
+
+      <div class="cards-inner" data-query="pages-list"></div>
+    </section>
+    <main class="body-wrapper">
+      <div class="body-inner">
+
+        <div data-query="template-card">
+        </div>
+
+        <!-- checklist template
+        <div class="body-content tpl-activity_checklist">
+          <include src="src/components/tpl/checklist.html"></include>
+        </div>
+         -->
+
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

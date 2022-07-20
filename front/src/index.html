@@ -3,7 +3,8 @@
 
 <head>
   <include src="src/components/header.html" locals='{
-      "title": "Niuo"
+      "title": "Niuo | Editable travel scrapbook",
+      "description": "Editable scrapbook"
     }'>
   </include>
   <link rel="stylesheet" href="styles/styles.css" />
@@ -13,32 +14,7 @@
 </head>
 
 <body>
-  <include src="src/components/top-nav.html"></include>
-
-  <div class="content">
-
-    <section class="cards-wrapper">
-      <ul class="cards-info" data-query="scrapbook-data">
-      </ul>
-
-      <div class="cards-inner" data-query="pages-list"></div>
-    </section>
-    <main class="body-wrapper">
-      <div class="body-inner">
-        <div class="page" data-query="page-index"></div>
-
-        <div class="body-content" data-query="template-card">
-        </div>
-
-        <!-- checklist template
-        <div class="body-content tpl-activity_checklist">
-          <include src="src/components/tpl/checklist.html"></include>
-        </div>
-         -->
-
-      </div>
-    </main>
-  </div>
+  <a href="composer.html">COMPOSER</a>
 </body>
 
 </html>

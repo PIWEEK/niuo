@@ -1,7 +1,8 @@
 import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
-import { buildCoverPage } from "../types/cover";
+// import { buildActivityPage } from "../types/activity-checklist";
+// import { buildCoverPage } from "../types/cover";
 
-const scrapbook = getScrapbook();
+let scrapbook = getScrapbook();
 
 // Init zero state
 
@@ -35,62 +36,67 @@ const initPagesList = () => {
   initCardListener();
 };
 
-const initMainCard = () => {
-  setPageIndex(0);
-  setPageClass("cover");
-  buildCoverPage(scrapbook);
+const initMainCards = () => {
+  // setPageIndex(0);
+  // setPageClass("cover");
+  // buildCoverPage(scrapbook);
+  buildCards(scrapbook);
 };
 
 const initCardListener = () => {
   const btnCards = document.querySelectorAll('[data-query="page-card"]');
   btnCards.forEach((btnCard) => {
-    btnCard.addEventListener("click", buildMainCard);
+    btnCard.addEventListener("click", scrolltoCard);
   });
+};
+
+const scrolltoCard = () => {
+  console.log("scrolltoCard");
 };
 
 // Main Card types
 
-const buildMainCard = (event) => {
-  const type = event.currentTarget.getAttribute("data-type");
-  const index = event.currentTarget.getAttribute("data-index");
-  scrapbook = getScrapbook();
+// const buildMainCard = (event) => {
+//   const type = event.currentTarget.getAttribute("data-type");
+//   const index = event.currentTarget.getAttribute("data-index");
+//   scrapbook = getScrapbook();
 
-  setPageIndex(index);
-  setPageClass(type);
+//   setPageIndex(index);
+//   setPageClass(type);
 
-  switch (type) {
-    case "cover":
-      buildCoverPage(scrapbook);
-      break;
+//   switch (type) {
+//     case "cover":
+//       buildCoverPage(scrapbook);
+//       break;
 
-    case "activity_checklist":
-      console.log("buildActivityPage()");
-      break;
+//     case "activity_checklist":
+//       buildActivityPage(scrapbook);
+//       break;
 
-    default:
-      console.error("this type does not exist");
-      break;
-  }
-};
+//     default:
+//       console.error("this type does not exist");
+//       break;
+//   }
+// };
 
-const setPageIndex = (index) => {
-  const pageIndexEl = document.querySelector('[data-query="page-index"]');
-  const indexNum = Number(index) + 1;
-  pageIndexEl.textContent = `Página ${indexNum}`;
-};
+// const setPageIndex = (index) => {
+//   const pageIndexEl = document.querySelector('[data-query="page-index"]');
+//   const indexNum = Number(index) + 1;
+//   pageIndexEl.textContent = `Página ${indexNum}`;
+// };
 
-const setPageClass = (type) => {
-  const pageCard = document.querySelector('[data-query="template-card"]');
-  pageCard.classList.remove();
-  pageCard.classList.add("body-content", `tpl-${type}`);
-};
+// const setPageClass = (type) => {
+//   const pageCard = document.querySelector('[data-query="template-card"]');
+//   pageCard.classList.remove();
+//   pageCard.classList.add("body-content", `tpl-${type}`);
+// };
 
 // INIT
 
 const init = () => {
   initScrapbookData();
   initPagesList();
-  initMainCard();
+  initMainCards();
 };
 
 init();
