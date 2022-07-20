@@ -26,9 +26,8 @@
         Todavía no tienes ningún viaje creado <br>
         ¿A dónde nos vamos hoy?
       </p>
-      <a href="/">
-        <img src="../src/assets/space_rocket.svg" class="logo" alt="logo" />
-      </a>
+      
+      <img src="../src/assets/space_rocket.svg" alt="rocket" />
 
       <button id="newScrapbookBtn" class="button btn-big">Crear nuevo viaje</button>
     </div>
@@ -36,6 +35,11 @@
     <ul id="scrapbooks-list">
       
       <li class="scrapbook">
+        <div class="actions">
+          <button class="ac-share"></button>
+          <button class="ac-duplicate"></button>
+          <button class="ac-delete"></button>
+        </div>
         <a href="">
           <img src="../src/assets/scrapbook-thumb.png" alt="">
           <ul class="cards-info" data-query="scrapbook-data">
