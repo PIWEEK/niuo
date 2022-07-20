@@ -67,10 +67,13 @@ header {
   max-height: calc(100vh - var(--header-height));
   overflow: auto;
   flex-shrink: 0;
+  padding-left: var(--space-2);
 
   & .cards-info {
     list-style: none;
     padding-left: var(--space-1);
+    max-width: 240px;
+    padding-right: var(--space-2);
   }
 
   & .cards-inner {
@@ -78,15 +81,26 @@ header {
     flex-flow: column;
     overflow-x: auto;
     gap: var(--space-1);
-    padding: var(--space-1);
+    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
+    counter-reset: css-counter 0;
 
     & .card {
+      position: relative;
       height: 100px;
       width: 140px;
       border: 1px solid var(--color-border);
       background-color: white;
       border-radius: 4px;
       flex-shrink: 0;
+      counter-increment: css-counter 1;
+
+      &:before {
+        content: counter(css-counter) ". ";
+        position: absolute;
+        top: 0;
+        left: -20px;
+        font-size: 1.2em;
+      }
 
       &:hover {
         border-color: var(--color-highlight);
