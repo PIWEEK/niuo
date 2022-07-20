@@ -2,6 +2,6 @@ input[type="text"] {
   appearance: none;
   border: none;
   font-family: Sofia;
-  max-inline-size: 80%;
+  inline-size: 80%;
   text-align: center;
 }

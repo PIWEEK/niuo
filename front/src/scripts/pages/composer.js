@@ -43,7 +43,7 @@ const initPagesList = () => {
 const initMainCards = () => {
   const pageCard = document.querySelector('[data-query="template-card"]');
   console.log(scrapbook.pages);
-  scrapbook.pages.forEach((page) => {
+  scrapbook.pages.forEach((page, index) => {
     const pageEl = document.createElement("div");
     pageEl.classList.add("body-content");
     pageEl.classList.add(`tpl-${page.type}`);
@@ -53,7 +53,7 @@ const initMainCards = () => {
         break;
 
       case "activity_checklist":
-        buildActivityPage(pageEl, page, scrapbook);
+        buildActivityPage(pageEl, page, index, scrapbook);
         break;
 
       default:

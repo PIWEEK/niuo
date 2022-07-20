@@ -1,5 +1,41 @@
-const buildActivityPage = (element, page, scrapbook) => {
-  console.log("buildActivityPage()", element, page, scrapbook);
+const initInputListeners = (element) => {
+  const textSlots = element.querySelectorAll(
+    '[data-query="checklist-slot-input-text"]'
+  );
+
+  const imageSlots = element.querySelectorAll(
+    '[data-query="checklist-slot-input-image"]'
+  );
+
+  textSlots.forEach((textSlot) => {
+    textSlot.addEventListener("change", updateTextSlot);
+  });
+
+  imageSlots.forEach((imageSlot) => {
+    imageSlot.addEventListener("change", updateImageSlot);
+  });
+};
+
+const updateTextSlot = (event) => {
+  // Update database
+  console.log({
+    target: event.currentTarget,
+    value: event.currentTarget.value,
+    index: event.currentTarget.getAttribute("data-index"),
+  });
+};
+
+const updateImageSlot = (event) => {
+  // Update database
+  console.log({
+    target: event.currentTarget,
+    value: event.currentTarget.value,
+    index: event.currentTarget.getAttribute("data-index"),
+  });
+};
+
+const buildActivityPage = (element, page, pageIndex, scrapbook) => {
+  // console.log("buildActivityPage()", element, page, scrapbook);
 
   const checklistEl = `
   <div class="summary">El viaje de ${scrapbook.who} a Sevilla</div>
@@ -7,42 +43,69 @@ const buildActivityPage = (element, page, scrapbook) => {
   y rodéalas con un círculo:</p>
   `;
   element.innerHTML = checklistEl;
+
+  const gridWrapper = document.createElement("div");
+  const gridStart = document.createElement("div");
+  const gridEnd = document.createElement("div");
+  gridStart.classList.add("grid-start");
+  gridEnd.classList.add("grid-end");
+  gridWrapper.classList.add("checklist");
+
+  page.slots.forEach((slot, index) => {
+    let slotEl;
+    if (slot.type === "image") {
+      // Create wrapper
+      slotEl = document.createElement("label");
+      slotEl.setAttribute("for", `checklist-input-image-${index}`);
+      slotEl.classList.add("checklist-image-wrapper");
+      // Create Input
+      inputEl = document.createElement("input");
+      inputEl.setAttribute("type", "file");
+      inputEl.setAttribute("id", `checklist-input-image-${index}`);
+      inputEl.setAttribute("data-query", "checklist-slot-input-image");
+      inputEl.setAttribute("data-index", index);
+      inputEl.classList.add("checklist-input-image");
+      // Create Image
+      imgEl = document.createElement("img");
+      imgEl.classList.add("image");
+      imgEl.setAttribute("alt", "");
+
+      slotEl.append(inputEl);
+      slotEl.append(imgEl);
+
+      if (slot.status === "empty") {
+        imgEl.setAttribute("src", "");
+      } else {
+        // slotEl.setAttribute(
+        //   "src",
+        //   `http://locahost:8000/scrapbooks/${scrapbook.id}/pages/${pageIndex}/${index}/image`
+        // );
+        imgEl.setAttribute("src", slot.status);
+      }
+    } else if (slot.type === "text") {
+      slotEl = document.createElement("input");
+      slotEl.classList.add("text");
+      slotEl.setAttribute("type", "text");
+      slotEl.setAttribute("data-query", "checklist-slot-input-text");
+      slotEl.setAttribute("data-index", index);
+      slotEl.value = slot.text;
+    }
+    if (index <= 6) {
+      gridStart.append(slotEl);
+    }
+    if (index === 6) {
+      slotEl === null;
+    }
+    if (index >= 6 && index <= 12) {
+      gridEnd.insertBefore(slotEl, gridEnd.firstChild);
+    }
+  });
+
+  gridWrapper.append(gridStart);
+  gridWrapper.append(gridEnd);
+  element.append(gridWrapper);
+
+  initInputListeners(element);
 };
-
-{
-  /* <div class="body-content tpl-activity-checklist">
-    <div class="summary">El viaje de Pau a Sevilla</div>
-
-    <p class="font-ligature fs-2 intro">¡Hola Pau! En tu viaje a Sevilla estás viendo cosas muy chulas. Encuentra estas
-        y rodéalas con un círculo:</p>
-
-    <ul class="checklist">
-        <li>
-            <div class="image"></div>
-            <p class="text">La Giralda</p>
-        </li>
-        <li>
-            <div class="image"></div>
-            <p class="text">La Torre del Oro</p>
-        </li>
-        <li>
-            <div class="image"></div>
-            <p class="text">Serranito</p>
-        </li>
-        <li>
-            <div class="image"></div>
-            <p class="text">La Giralda</p>
-        </li>
-        <li>
-            <div class="image"></div>
-            <p class="text">La Torre del Oro</p>
-        </li>
-        <li>
-            <div class="image"></div>
-            <p class="text">Serranito</p>
-        </li>
-    </ul>
-</div> */
-}
 
 export { buildActivityPage };

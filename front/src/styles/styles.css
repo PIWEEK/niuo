@@ -119,9 +119,7 @@ header {
         box-shadow: 0 0 0 1px var(--color-primary);
       }
     }
-
   }
-
 }
 
 .content-composer {
@@ -190,8 +188,6 @@ header {
         }
       }
     }
-
-
   }
 }
 
@@ -220,7 +216,7 @@ header {
       padding: var(--space-2);
       text-align: center;
       max-block-size: 650px;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 1.41 / 1;
       flex-shrink: 0;
 
       & p {
@@ -249,31 +245,51 @@ header {
   }
 
   & .checklist {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
 
-    & li {
-      width: 48%;
-      padding: var(--space-1) 0;
-      display: flex;
+    & .grid-start,
+    & .grid-end {
+      align-items: center;
+      display: grid;
+      gap: var(--space-1);
+      grid-template-columns: auto 1fr;
+    }
 
-      & .image {
-        width: 100px;
-        height: 100px;
-        flex-shrink: 0;
-        background-color: cadetblue;
-        margin-right: var(--space-1);
-      }
-      & .text {
-        font-size: 2.4em;
-        font-family: var(--font-ligature);
-        text-align: left;
-      }
+    & .grid-end {
+      justify-items: flex-end;
+    }
+
+    & .checklist-image-wrapper {
+      position: relative;
+    }
+
+    & .checklist-input-image {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      visibility: hidden;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    & .image {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      background-color: cadetblue;
+      margin-right: var(--space-1);
+    }
+    & .text {
+      font-size: 2.4em;
+      font-family: var(--font-ligature);
+      text-align: left;
     }
   }
 }
@@ -327,7 +343,7 @@ header {
   width: auto;
   z-index: 10;
   border-radius: 5px;
-  box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
+  box-shadow: 4px 4px 4px rgba(49, 54, 56, 0.1);
   margin-top: -200px;
 
   &::before {
@@ -340,8 +356,8 @@ header {
     left: -10px;
     transform: rotate(45deg);
     border: 1px solid var(--color-stroke);
-    box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
-    clip-path: path("M 0 0 L 22 22 L 0 22 Z")
+    box-shadow: 4px 4px 4px rgba(49, 54, 56, 0.1);
+    clip-path: path("M 0 0 L 22 22 L 0 22 Z");
   }
 
   & button.card {
@@ -350,7 +366,6 @@ header {
 
     &:hover {
       background: var(--color-highlight);
-      
     }
   }
 }
