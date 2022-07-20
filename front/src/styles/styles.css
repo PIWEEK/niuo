@@ -58,7 +58,7 @@ header {
   }
 }
 
-.content {
+.content-index {
   width: 100%;
   display: flex;
   position: relative;
@@ -73,8 +73,6 @@ header {
   display: flex;
   text-align: center;
   align-items: center;
-
-  display: none;
 }
 
 #scrapbooks-list {
@@ -106,6 +104,15 @@ header {
 
 }
 
+
+.content-composer {
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  height: calc(100vh - var(--header-height));
+  flex-shrink: 0;
+}
 .cards-wrapper {
   max-height: calc(100vh - var(--header-height));
   overflow: auto;
