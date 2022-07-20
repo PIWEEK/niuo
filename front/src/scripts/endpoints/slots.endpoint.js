@@ -6,16 +6,25 @@ import { config } from "../../assets/config";
 // Texto: Texto plano?
 // JSON: Tipo genérico para guardar información estructurada
 
-const uploadImage = (scrapbookId, pageId, slotId, image) => {
+const options = {
+  mode: "cors",
+  credentials: "include",
+};
+
+const uploadImage = async (scrapbookId, pageId, slotId, image) => {
   const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}/${slotId}/image`;
 
-  fetch(url, {
+  const formData = new FormData();
+  formData.append("file", image);
+
+  const res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify(image),
-  })
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+    headers: { "Content-Type": "multipart/form-data" },
+    body: formData,
+    ...options,
+  });
+
+  return res.json();
 };
 
 const uploadText = (scrapbookId, pageId, slotId, text) => {

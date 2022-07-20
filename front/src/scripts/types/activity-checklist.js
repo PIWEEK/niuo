@@ -1,3 +1,5 @@
+import { uploadImage } from "../endpoints/slots.endpoint";
+
 const initInputListeners = (element) => {
   const textSlots = element.querySelectorAll(
     '[data-query="checklist-slot-input-text"]'
@@ -12,6 +14,7 @@ const initInputListeners = (element) => {
   });
 
   imageSlots.forEach((imageSlot) => {
+    console.log("forEach");
     imageSlot.addEventListener("change", updateImageSlot);
   });
 };
@@ -25,18 +28,16 @@ const updateTextSlot = (event) => {
   });
 };
 
-const updateImageSlot = (event) => {
-  // Update database
-  console.log({
-    target: event.currentTarget,
-    value: event.currentTarget.value,
-    index: event.currentTarget.getAttribute("data-index"),
-  });
+const updateImageSlot = async (event) => {
+  console.log(event.currentTarget);
+  const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
+  const page = event.currentTarget.getAttribute("data-page");
+  const index = event.currentTarget.getAttribute("data-index");
+  const element = event.currentTarget.value;
+  await uploadImage(scrapbook, page, index, element);
 };
 
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
-  // console.log("buildActivityPage()", element, page, scrapbook);
-
   const checklistEl = `
   <div class="summary">El viaje de ${scrapbook.who} a Sevilla</div>
   <p class="font-ligature fs-2 intro">¡Hola ${scrapbook.who}! En tu viaje a ${scrapbook.where} estás viendo cosas muy chulas. Encuentra estas
@@ -63,6 +64,8 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       inputEl.setAttribute("type", "file");
       inputEl.setAttribute("id", `checklist-input-image-${index}`);
       inputEl.setAttribute("data-query", "checklist-slot-input-image");
+      inputEl.setAttribute("data-scrapbook", scrapbook.id);
+      inputEl.setAttribute("data-page", pageIndex);
       inputEl.setAttribute("data-index", index);
       inputEl.classList.add("checklist-input-image");
       // Create Image
