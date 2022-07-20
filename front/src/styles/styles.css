@@ -151,7 +151,6 @@ header {
     overflow-x: auto;
     gap: var(--space-1);
     padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
-    counter-reset: css-counter 0;
 
     & .card {
       position: relative;
@@ -161,10 +160,8 @@ header {
       background-color: white;
       border-radius: 4px;
       flex-shrink: 0;
-      counter-increment: css-counter 1;
 
       &:before {
-        content: counter(css-counter) ". ";
         position: absolute;
         top: 0;
         left: -20px;
@@ -182,6 +179,19 @@ header {
         background-color: rgba(255, 255, 255, 0.44);
       }
     }
+
+    &.counter {
+      counter-reset: css-counter 0;
+
+      & .card {
+        counter-increment: css-counter 1;
+        &:before {
+          content: counter(css-counter) ". ";
+        }
+      }
+    }
+
+
   }
 }
 
@@ -293,5 +303,54 @@ header {
   &.btn-big {
     height: 60px;
     font-size: 20px;
+  }
+}
+
+.cards-wrapper .cards-inner #add-card.card {
+  background: #f9c74f40;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 48px;
+}
+
+.cards-wrapper .cards-inner .new-card-popup {
+  background: white;
+  border: 1px solid var(--color-stroke);
+  bottom: 200px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: auto;
+  left: 220px;
+  padding: 8px;
+  position: absolute;
+  width: auto;
+  z-index: 10;
+  border-radius: 5px;
+  box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
+
+  &::before {
+    content: " ";
+    width: 20px;
+    height: 20px;
+    background: white;
+    position: absolute;
+    bottom: 75px;
+    left: -10px;
+    transform: rotate(45deg);
+    border: 1px solid var(--color-stroke);
+    box-shadow: 4px 4px 4px rgba(49,54,56, 0.10);
+    clip-path: path('M 0,0 L22,22, L0,22 Z');
+  }
+
+  & button.card {
+    color: black;
+    border: 1px solid var(--color-primary);
+
+    &:hover {
+      background: var(--color-highlight);
+      
+    }
   }
 }

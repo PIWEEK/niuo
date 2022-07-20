@@ -21,8 +21,38 @@
       <ul class="cards-info" data-query="scrapbook-data">
       </ul>
 
-      <div class="cards-inner" data-query="pages-list"></div>
+      <div class="cards-inner counter" data-query="pages-list">
+      </div>
+
+      <div class="cards-inner" data-query="pages-list">
+        <button id="add-card" class="card" data-type="cover" data-query="page-card" data-index="0">+</button>
+
+        <div class="new-card-popup" style="display: none">
+          <button class="card" data-type="cover">
+            Añadir resumen del viaje
+          </button>
+          <button class="card" data-type="activity_checklist">
+            Juego checklist
+          </button>
+          <!--
+          <button class="card" data-type="activity_checklist">
+            Medidor de emociones
+          </button>
+
+          <button class="card" data-type="activity_checklist">
+            Medios de transporte
+          </button>
+          <button class="card" data-type="activity_checklist">
+            Despedida
+          </button>
+          <button class="card" data-type="activity_checklist">
+            Colorear
+          </button>
+          -->
+        </div>
+      </div>
     </section>
+    
     <main class="body-wrapper">
       <div class="body-inner" data-query="template-card">
 
@@ -36,6 +66,7 @@
          -->
 
       </div>
+
     </main>
   </div>
 </body>

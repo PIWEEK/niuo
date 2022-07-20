@@ -1,4 +1,5 @@
 import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
+import { createPage } from "../endpoints/pages.endpoint";
 import { buildActivityPage } from "../types/activity-checklist";
 import { buildCoverPage } from "../types/cover";
 import { pageMock } from "../mocks/pages.mock";
@@ -74,18 +75,63 @@ const scrolltoCard = () => {
   console.log("scrolltoCard");
 };
 
+const initAddCard = () => {
+  const addCardBtn = document.getElementById("add-card");
+  const cardPopup = document.querySelector(".new-card-popup");
+  
+  addCardBtn.addEventListener("click", (event) => {
+    if (cardPopup.style.display === "grid") {
+      cardPopup.style.display = "none";
+    } else {
+      cardPopup.style.display = "grid";
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!addCardBtn.contains(event.target) &&
+        !cardPopup.contains(event.target)) {
+      cardPopup.style.display = "none";
+    }
+  });
+
+  const newCardButtons = document.querySelectorAll(".new-card-popup .card");
+  for (const cardButton of newCardButtons) {
+
+    cardButton.addEventListener("click", async (event) => {
+      const result = await createPage(scrapbook.id, {
+        type: cardButton.getAttribute("data-type")
+      });
+      scrapbook = result;
+      cardPopup.style.display = "none";
+      update();
+    });
+
+   
+  }
+};
+
 // INIT
 
 const init = async () => {
   const params = new URLSearchParams(window.location.search);
   scrapbook = await getScrapbook(params.get("id"));
 
-  scrapbook.pages = pageMock.pages;
-
   initScrapbookData();
   initPagesList();
   initMainCards();
   initPrintListener();
+  initAddCard();
+};
+
+const update = async() => {
+  const pagesList = document.querySelector('[data-query="pages-list"]');
+  const pageCard = document.querySelector('[data-query="template-card"]');
+  pageCard.innerHTML = '';
+  pagesList.innerHTML = '';
+  
+  initScrapbookData();
+  initPagesList();
+  initMainCards();
 };
 
 init();

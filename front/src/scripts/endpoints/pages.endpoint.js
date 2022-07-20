@@ -7,18 +7,24 @@ import { config } from "../../assets/config";
 // type (Enumerado): representa el tipo de página
 // slots (Array de Slot)
 
-const createPage = (scrapbookId) => {
-  const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages`;
-
-  fetch(url, {
-    method: "PUT",
-  })
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+const options = {
+  mode: "cors",
+  credentials: "include",
 };
 
-const modifyPage = (scrapbookId, pageId, data) => {
+const createPage = async (scrapbookId, data) => {
+  const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages`;
+
+  const res = await fetch(url, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    ...options
+  });
+
+  return await res.json();
+};
+
+const modifyPage = async (scrapbookId, pageId, data) => {
   const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}`;
 
   fetch(url, {
