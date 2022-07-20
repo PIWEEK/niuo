@@ -40,7 +40,7 @@ const buildCoverPage = (element, scrapbook) => {
       </div>
       <p class="font-ligature fs-3">por</p>
       <div>
-        <input class="font-ligature fs-5" type="text" id="people" data-query="destination-child" value="${scrapbook.people[0]}">
+        <input class="font-ligature fs-5" type="text" id="people" data-query="destination-child" value="${scrapbook.people && scrapbook.people[0]}">
       </div>
     `;
 

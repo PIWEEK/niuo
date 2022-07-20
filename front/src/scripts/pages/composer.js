@@ -2,7 +2,7 @@ import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
 // import { buildActivityPage } from "../types/activity-checklist";
 import { buildCoverPage } from "../types/cover";
 
-let scrapbook = getScrapbook();
+let scrapbook;
 
 // Init zero state
 
@@ -19,8 +19,8 @@ const initScrapbookData = () => {
     <li><strong>Viaje a:</strong> <span data-query="scrapbook-data-destination">${
       scrapbook.destination
     }</span></li>
-    <li><strong>Fecha:</strong> ${scrapbook.dateStart.toDateString()} - ${scrapbook.dateFinish.toDateString()} </li>
-    <li><strong>Viajan:</strong> <span data-query="scrapbook-data-child"> ${scrapbook.people
+    <li><strong>Fecha:</strong> ${scrapbook.dateStart} - ${scrapbook.dateFinish} </li>
+    <li><strong>Viajan:</strong> <span data-query="scrapbook-data-child"> ${scrapbook.people?
       .join(", ")
       .replace(/, ([^,]*)$/, " y $1")} también </span>
     </li>
@@ -80,7 +80,9 @@ const scrolltoCard = () => {
 
 // INIT
 
-const init = () => {
+const init = async () => {
+  scrapbook = await getScrapbook("c76ff7b8-9893-4bad-9cf8-afbe5884892c");
+
   initScrapbookData();
   initPagesList();
   initMainCards();

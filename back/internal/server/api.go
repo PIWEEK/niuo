@@ -69,6 +69,10 @@ func (a *App) findPage(w http.ResponseWriter, r *http.Request, scrapbook Scrapbo
 
 // API
 
+
+func (a *App) Empty(w http.ResponseWriter, r *http.Request) {
+}
+
 func (a *App) RetrieveScrapbooks(w http.ResponseWriter, r *http.Request) {
 	user, ok := r.Context().Value("user").(UserDB)
 

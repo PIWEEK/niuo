@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/styles.css" />
   <!-- <link rel="stylesheet" href="styles/print.css" media="print" /> -->
   <script type="module" src="scripts/app.js"></script>
+  <script type="module" src="scripts/pages/index.js"></script>
 </head>
 
 <body>
@@ -26,13 +27,11 @@
         ¿A dónde nos vamos hoy?
       </p>
       <img src="../src/assets/space_rocket.svg" class="logo" alt="logo" />
-      <a href="composer.html" class="button btn-big">Crear nuevo viaje</a>
+      <button id="newScrapbookBtn" class="button btn-big">Crear nuevo viaje</button>
     </div>
-    <div class="scrapbooks-list">
-      <div class="scrapbook"></div>
-      <div class="scrapbook"></div>
-      <div class="scrapbook"></div>
-    </div>
+
+    <ul id="scrapbooks-list">
+    </ul>
   </section>
 
 </body>
