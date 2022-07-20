@@ -19,7 +19,6 @@ const uploadImage = async (scrapbookId, pageId, slotId, image) => {
 
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "multipart/form-data" },
     body: formData,
     ...options,
   });

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Sofia&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
   --color-dark: #313638;
@@ -7,6 +7,7 @@
   --color-primary: #f3722c;
   --color-background: #fef6e3;
   --color-border: #577590;
+  --color-stroke: #e8e9eb;
 
   --space-1: 1em;
   --space-2: 2em;

@@ -29,11 +29,15 @@ const updateTextSlot = async (event) => {
 };
 
 const updateImageSlot = async (event) => {
-  const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
-  const page = event.currentTarget.getAttribute("data-page");
-  const index = event.currentTarget.getAttribute("data-index");
-  const image = event.currentTarget.files[0];
-  await uploadImage(scrapbook, page, index, image);
+  console.log(event.currentTarget);
+  const input = event.currentTarget;
+  const scrapbook = input.getAttribute("data-scrapbook");
+  const page = input.getAttribute("data-page");
+  const index = input.getAttribute("data-index");
+  await uploadImage(scrapbook, page, index, event.target.files[0]);
+
+  input.parentElement.querySelector("img").src =
+    `http://localhost:8000/api/scrapbooks/${scrapbook}/pages/${page}/${index}/image`
 };
 
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
@@ -75,14 +79,13 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl.append(inputEl);
       slotEl.append(imgEl);
 
-      if (slot.status === "empty") {
+      if (slot.state === "EMPTY") {
         imgEl.setAttribute("src", "");
       } else {
-        // slotEl.setAttribute(
-        //   "src",
-        //   `http://locahost:8000/scrapbooks/${scrapbook.id}/pages/${pageIndex}/${index}/image`
-        // );
-        imgEl.setAttribute("src", slot.status);
+         imgEl.setAttribute(
+           "src",
+           `http://localhost:8000/api/scrapbooks/${scrapbook.id}/pages/${pageIndex}/${index}/image`
+         );
       }
     } else if (slot.type === "text") {
       slotEl = document.createElement("input");

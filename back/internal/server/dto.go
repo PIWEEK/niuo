@@ -34,6 +34,7 @@ type PageDataOutput struct {
 type SlotDataInput struct {
 	Type string `json:"type"`
 	Slot int `json:"slot"`
+	Text string `json:"text,omitempty"`
 }
 
 type SlotDataOutput struct {

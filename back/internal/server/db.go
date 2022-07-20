@@ -170,7 +170,7 @@ func (a *App) getLastPageOrder(scrapbookId uuid.UUID) int {
 		First(&page)
 
 	if result.Error != nil {
-		return 0
+		return -1
 	}
 
 	return page.Order
@@ -181,6 +181,17 @@ func (a *App) saveSlotImage(slotImage *SlotImageDB) {
 		UpdateAll: true,
 	}).Create(slotImage)
 }
+
+func (a *App) getSlotByNumber(pageId uuid.UUID, slotNumber int) SlotDB {
+	var slot SlotDB
+
+	a.DB.
+		Where("page_id = ? and num_slot = ?", pageId, slotNumber).
+		First(&slot)
+
+	return slot
+}
+
 
 func (a *App) getSlotImage(slotImage *SlotImageDB, pageId uuid.UUID, slot int){
 	a.DB.

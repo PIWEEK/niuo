@@ -39,6 +39,7 @@ func (slot SlotDB) FormatBasic() SlotDataOutput {
 		SlotDataInput: SlotDataInput {
 			Type: slot.Type,
 			Slot: slot.NumSlot,
+			Text: slot.Text,
 		},
 		State: slot.Status,
 	}

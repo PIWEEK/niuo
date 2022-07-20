@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"io"
 	"strconv"
 	"encoding/json"
@@ -117,12 +118,19 @@ func (a *App) CreateSlots(pageType string) []SlotDataInput {
 		return []SlotDataInput {
 			SlotDataInput {Type: "image"},
 			SlotDataInput {Type: "text"},
+
 			SlotDataInput {Type: "image"},
 			SlotDataInput {Type: "text"},
+
 			SlotDataInput {Type: "image"},
 			SlotDataInput {Type: "text"},
+
 			SlotDataInput {Type: "image"},
 			SlotDataInput {Type: "text"},
+
+			SlotDataInput {Type: "image"},
+			SlotDataInput {Type: "text"},
+
 			SlotDataInput {Type: "image"},
 			SlotDataInput {Type: "text"},
 		}
@@ -204,45 +212,47 @@ func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 	scrapbook, ok := a.findScrapbook(w, r)
 
 	if ok {
-		vars := mux.Vars(r)
+		page, ok := a.findPage(w, r, scrapbook)
 
-		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
-		slot, _ := strconv.Atoi(vars["slot"])
+		if ok {
+			vars := mux.Vars(r)
+			slotNumber, _ := strconv.Atoi(vars["slotNumber"])
 
-		page, err := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+			file, fileHeader, err := r.FormFile("file")
 
-		if err != nil {
-			respondWithError(w, 404, "Page not found")
-			return
+			fmt.Printf("??%v", err)
+
+			if err != nil {
+				respondWithError(w, 404, "Cannot read the file")
+				fmt.Printf("Cannot read the file\n")
+				return
+			}
+
+			fileName := fileHeader.Filename
+			size := fileHeader.Size
+
+			defer file.Close()
+
+			data, err := io.ReadAll(file)
+
+			if err != nil {
+				respondWithError(w, 404, "Cannot read the file data")
+				return
+			}
+
+			slot := a.getSlotByNumber(page.ID, slotNumber)
+			slot.Status = "FILLED"
+			a.saveSlot(&slot)
+
+			slotImage := SlotImageDB {
+				PageId: page.ID,
+				Slot: slotNumber,
+				Data: data,
+			}
+
+			a.saveSlotImage(&slotImage)
+			respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })	
 		}
-
-		file, fileHeader, err := r.FormFile("file")
-
-		fileName := fileHeader.Filename
-		size := fileHeader.Size
-
-		if err != nil {
-			respondWithError(w, 404, "Cannot read the file")
-			return
-		}
-
-		defer file.Close()
-
-		data, err := io.ReadAll(file)
-
-		if err != nil {
-			respondWithError(w, 404, "Cannot read the file data")
-			return
-		}
-
-		slotImage := SlotImageDB {
-		  PageId: page.ID,
-			Slot: slot,
-			Data: data,
-		}
-
-		a.saveSlotImage(&slotImage)
-		respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })
 	}
 }
 
@@ -250,24 +260,42 @@ func (a *App) GetSlotImage(w http.ResponseWriter, r *http.Request) {
 	scrapbook, ok := a.findScrapbook(w, r)
 
 	if ok {
-		vars := mux.Vars(r)
+		page, ok := a.findPage(w, r, scrapbook)
 
-		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
-		slot, _ := strconv.Atoi(vars["slot"])
+		if ok {
+			vars := mux.Vars(r)
+			slotNumber, _ := strconv.Atoi(vars["slotNumber"])
 
-		page, err := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+			var slotImage SlotImageDB
+			a.getSlotImage(&slotImage, page.ID, slotNumber)
 
-		if err != nil {
-			respondWithError(w, 404, "Page not found")
+			w.WriteHeader(200)
+			w.Write(slotImage.Data)	
 		}
-
-		var slotImage SlotImageDB
-		a.getSlotImage(&slotImage, page.ID, slot)
-
-		w.WriteHeader(200)
-		w.Write(slotImage.Data)
 	}
 }
 
-func (a *App) SetSlotText(w http.ResponseWriter, r *http.Request) {}
-func (a *App) SetSlotData(w http.ResponseWriter, r *http.Request) {}
+func (a *App) SetSlotText(w http.ResponseWriter, r *http.Request) {
+	var data SlotDataInput
+
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok && decode(w, r, &data) {
+		page, ok := a.findPage(w, r, scrapbook)
+
+		if ok {
+			vars := mux.Vars(r)
+			slotNumber, _ := strconv.Atoi(vars["slotNumber"])
+			slot := a.getSlotByNumber(page.ID, slotNumber)
+
+			slot.Text = data.Text
+			slot.Status = "FILLED"
+
+			a.saveSlot(&slot)
+
+			w.WriteHeader(204)
+		}
+	}
+}
+
+

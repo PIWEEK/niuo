@@ -41,5 +41,6 @@ func (s SlotDataInput) Parse(numSlot int, pageId uuid.UUID) SlotDB {
 		Type: s.Type,
 		Status: "EMPTY",
 		PageId: pageId,
+		Text: s.Text,
 	}
 }

@@ -39,7 +39,6 @@ func (a *App) initRoutes() {
 
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/text", a.Empty).Methods("OPTIONS")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/text", a.SetSlotText).Methods("POST")
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/data", a.SetSlotData).Methods("POST")
 
 }
 

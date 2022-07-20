@@ -51,6 +51,7 @@ type SlotDB struct {
 	NumSlot int
 	Type string
 	Status string
+	Text string
 
 	PageId uuid.UUID
 	Page PageDB `gorm:"foreignKey:PageId"`
