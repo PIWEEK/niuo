@@ -31,7 +31,7 @@ const uploadText = async (scrapbookId, pageId, slotId, text) => {
 
   const res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify(text),
+    body: JSON.stringify({"text": text}),
     ...options,
   });
 

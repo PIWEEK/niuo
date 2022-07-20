@@ -14,7 +14,6 @@ const initInputListeners = (element) => {
   });
 
   imageSlots.forEach((imageSlot) => {
-    console.log("forEach");
     imageSlot.addEventListener("change", updateImageSlot);
   });
 };
@@ -29,7 +28,6 @@ const updateTextSlot = async (event) => {
 };
 
 const updateImageSlot = async (event) => {
-  console.log(event.currentTarget);
   const input = event.currentTarget;
   const scrapbook = input.getAttribute("data-scrapbook");
   const page = input.getAttribute("data-page");
@@ -60,12 +58,12 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
     if (slot.type === "image") {
       // Create wrapper
       slotEl = document.createElement("label");
-      slotEl.setAttribute("for", `checklist-input-image-${index}`);
+      slotEl.setAttribute("for", `checklist-input-image-${pageIndex}-${index}`);
       slotEl.classList.add("checklist-image-wrapper");
       // Create Input
       inputEl = document.createElement("input");
       inputEl.setAttribute("type", "file");
-      inputEl.setAttribute("id", `checklist-input-image-${index}`);
+      inputEl.setAttribute("id", `checklist-input-image-${pageIndex}-${index}`);
       inputEl.setAttribute("data-query", "checklist-slot-input-image");
       inputEl.setAttribute("data-scrapbook", scrapbook.id);
       inputEl.setAttribute("data-page", pageIndex);
