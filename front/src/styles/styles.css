@@ -200,9 +200,12 @@ header {
 }
 
 .button {
+  display: flex;
   background-color: var(--color-highlight);
+  color: var(--color-dark);
   border-radius: 4px;
   height: 36px;
+  width: fit-content;
   padding-right: var(--space-2);
   padding-left: var(--space-2);
   cursor: pointer;
@@ -211,9 +214,14 @@ header {
   text-align: center;
   transition: all 0.3s;
   border: none;
+  text-decoration: none;
 
   &:hover {
     background-color: var(--color-dark);
     color: white;
+  }
+
+  &.btn-big {
+    height: 60px;
   }
 }
