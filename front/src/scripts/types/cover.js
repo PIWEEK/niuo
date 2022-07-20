@@ -1,10 +1,10 @@
 import { modifyScrapbook } from "../endpoints/scrapbooks.endpoint";
 
-const initCoverListeners = (scrapbook) => {
-  const destinationInput = document.querySelector(
+const initCoverListeners = (element, scrapbook) => {
+  const destinationInput = element.querySelector(
     '[data-query="destination-input"]'
   );
-  const destinationChildName = document.querySelector(
+  const destinationChildName = element.querySelector(
     '[data-query="destination-child"]'
   );
 
@@ -45,7 +45,7 @@ const buildCoverPage = (element, scrapbook) => {
     `;
 
   element.innerHTML = coverPage;
-  // initCoverListeners(scrapbook);
+  initCoverListeners(element, scrapbook);
 };
 
 export { buildCoverPage };
