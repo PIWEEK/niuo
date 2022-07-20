@@ -49,6 +49,23 @@ func (a *App) findScrapbook(w http.ResponseWriter, r *http.Request) (ScrapbookDB
 	return scrapbook, true
 }
 
+func (a *App) findPage(w http.ResponseWriter, r *http.Request, scrapbook ScrapbookDB) (PageDB, bool) {
+	vars := mux.Vars(r)
+	pageNumber, err := strconv.Atoi(vars["pageNumber"])
+
+	if err != nil {
+		respondWithError(w, 400, "Cannot decode pageNumber")
+		return PageDB{}, false
+	}
+
+	page, err := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+	if err != nil {
+		respondWithError(w, 404, "Not found")
+		return page, false
+	}
+
+	return page, true
+}
 
 // API
 
@@ -129,10 +146,55 @@ func (a *App) AddScrapbookPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (a *App) DeleteScrapbook(w http.ResponseWriter, r *http.Request) {}
-func (a *App) UpdateScrapbook(w http.ResponseWriter, r *http.Request) {}
-func (a *App) UpdateScrapbookPage(w http.ResponseWriter, r *http.Request) {}
-func (a *App) DeleteScrapbookPage(w http.ResponseWriter, r *http.Request) {}
+func (a *App) DeleteScrapbook(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		a.deleteScrapbook(&scrapbook)
+		respondWithJSON(w, 204, map[string]string { "result": "OK" })
+	}
+}
+
+func (a *App) UpdateScrapbook(w http.ResponseWriter, r *http.Request) {
+	var s ScrapbookDataInput
+
+	old, ok := a.findScrapbook(w, r)
+
+	if ok && decode(w, r, &s) {
+		scrapbook := s.Parse()
+
+		scrapbook.Base = old.Base
+		scrapbook.UserID = old.UserID
+
+		a.saveScrapbook(&scrapbook)
+		result := scrapbook.FormatBasic()
+		respondWithJSON(w, 200, result)
+	}
+}
+
+func (a *App) UpdateScrapbookPage(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		page, ok := a.findPage(w, r, scrapbook)
+
+		if ok {
+			a.deletePage(&page)
+		}
+	}
+}
+
+func (a *App) DeleteScrapbookPage(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		page, ok := a.findPage(w, r, scrapbook)
+
+		if ok {
+			a.deletePage(&page)
+		}
+	}
+}
 
 func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 	scrapbook, ok := a.findScrapbook(w, r)
@@ -143,7 +205,12 @@ func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
 		slot, _ := strconv.Atoi(vars["slot"])
 
-		page := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+		page, err := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+
+		if err != nil {
+			respondWithError(w, 404, "Page not found")
+			return
+		}
 
 		file, fileHeader, err := r.FormFile("file")
 
@@ -184,7 +251,11 @@ func (a *App) GetSlotImage(w http.ResponseWriter, r *http.Request) {
 		pageNumber, _ := strconv.Atoi(vars["pageNumber"])
 		slot, _ := strconv.Atoi(vars["slot"])
 
-		page := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+		page, err := a.retrievePageByNumber(scrapbook.ID, pageNumber)
+
+		if err != nil {
+			respondWithError(w, 404, "Page not found")
+		}
 
 		var slotImage SlotImageDB
 		a.getSlotImage(&slotImage, page.ID, slot)

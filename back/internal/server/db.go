@@ -58,19 +58,8 @@ func (a *App) initDatabase() {
 	)
 }
 
-func (a *App) loadFixtures() {
-	a.DB.Raw("truncate table user_dbs, scrapbook_dbs, page_dbs, slot_dbs");
-
-	user := UserDB {}
-
-	a.DB.Create(&user)
-
-	fmt.Printf("%s", user.ID)
-
-	a.DB.Create(&ScrapbookDB {
-		Name: "Test1",
-		UserID: user.ID,
-	})
+func (a *App) cleanDB() {
+	a.DB.Raw("truncate table user_dbs, scrapbook_dbs, page_dbs, slot_dbs, slot_image_dbs");
 }
 
 func (a *App) retrieveScrapbooks(user UserDB) []ScrapbookDB {
@@ -87,20 +76,43 @@ func (a *App) retrieveUser(userId uuid.UUID) UserDB {
 
 func (a *App) createUser() UserDB {
 	var user UserDB
-	a.DB.Create(&user)
+	a.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Create(&user)
 	return user
 }
 
 func (a *App) saveScrapbook(s *ScrapbookDB) {
-	a.DB.Create(&s)
+	a.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Create(&s)
+}
+
+func (a *App) deleteScrapbook(s *ScrapbookDB) {
+	a.DB.Delete(a.retrieveSlots(s.ID))
+	a.DB.Where("scrapbook_id = ?", s.ID).Delete(&PageDB{})
+	a.DB.Delete(s)
 }
 
 func (a *App) savePage(p *PageDB) {
-	a.DB.Create(&p)
+	a.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Create(&p)
+}
+
+func (a *App) deletePage(p *PageDB) {
+	a.DB.Where("page_id = ?", p.ID).Delete(&SlotDB{})
+	a.DB.Delete(p)
 }
 
 func (a *App) saveSlot(s *SlotDB) {
-	a.DB.Create(&s)
+	a.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Create(&s)
+}
+
+func (a *App) deleteSlot(s *SlotDB) {
+	a.DB.Delete(s)
 }
 
 func (a *App) saveSlots(slots []SlotDB) {
@@ -124,12 +136,17 @@ func (a *App) retrievePages(scrapbookId uuid.UUID) []PageDB {
 	return pages
 }
 
-func (a *App) retrievePageByNumber(scrapbookId uuid.UUID, pageNumber int) PageDB {
+func (a *App) retrievePageByNumber(scrapbookId uuid.UUID, pageNumber int) (PageDB, error) {
 	var page PageDB
-	a.DB.
+	result := a.DB.
 		Where("scrapbook_id = ? and page_dbs.order = ?", scrapbookId, pageNumber).
 		First(&page)
-	return page
+
+	if result.Error != nil {
+		return PageDB{}, result.Error
+	}
+
+	return page, nil
 }
 
 func (a *App) retrieveSlots(scrapbookId uuid.UUID) []SlotDB {
@@ -138,7 +155,8 @@ func (a *App) retrieveSlots(scrapbookId uuid.UUID) []SlotDB {
 	a.DB.
 		Joins("JOIN page_dbs ON page_dbs.id = slot_dbs.page_id and page_dbs.scrapbook_id = ?", scrapbookId).
 		Order("slot_dbs.num_slot asc").
-		Where("scrapbook_id = ?", scrapbookId).Find(&slots)
+		Where("scrapbook_id = ?", scrapbookId).
+		Find(&slots)
 
 	return slots
 }

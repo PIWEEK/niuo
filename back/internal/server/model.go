@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type Base struct {
 	ID uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
 	CreatedAt time.Time
@@ -14,7 +13,9 @@ type Base struct {
 }
 
 func (base *Base) BeforeCreate(db *gorm.DB) (err error) {
-	base.ID = uuid.New()
+	if base.ID == uuid.Nil {
+		base.ID = uuid.New()
+	}
 	return
 }
 

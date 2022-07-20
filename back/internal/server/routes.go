@@ -23,15 +23,15 @@ func (a *App) initRoutes() {
 
 	// Pages
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages", a.AddScrapbookPage).Methods("PUT")
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageId}", a.UpdateScrapbookPage).Methods("POST")
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageId}", a.DeleteScrapbookPage).Methods("DELETE")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}", a.UpdateScrapbookPage).Methods("POST")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}", a.DeleteScrapbookPage).Methods("DELETE")
 
 	// Slots
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/image", a.SetSlotImage).Methods("POST")
-		apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/image", a.GetSlotImage).Methods("GET")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/image", a.SetSlotImage).Methods("POST")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/image", a.GetSlotImage).Methods("GET")
 
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/text", a.SetSlotText).Methods("POST")
-	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slot}/data", a.SetSlotData).Methods("POST")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/text", a.SetSlotText).Methods("POST")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/data", a.SetSlotData).Methods("POST")
 
 }
 
