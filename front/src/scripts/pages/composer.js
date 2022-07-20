@@ -1,6 +1,7 @@
 import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
-// import { buildActivityPage } from "../types/activity-checklist";
+import { buildActivityPage } from "../types/activity-checklist";
 import { buildCoverPage } from "../types/cover";
+import { pageMock } from "../mocks/pages.mock";
 
 let scrapbook;
 
@@ -16,14 +17,9 @@ const initPrintListener = () => {
 const initScrapbookData = () => {
   const scrapbookData = document.querySelector('[data-query="scrapbook-data"]');
   const data = `
-    <li><strong>Viaje a:</strong> <span data-query="scrapbook-data-destination">${
-      scrapbook.destination
-    }</span></li>
-    <li><strong>Fecha:</strong> ${scrapbook.dateStart} - ${scrapbook.dateFinish} </li>
-    <li><strong>Viajan:</strong> <span data-query="scrapbook-data-child"> ${scrapbook.people?
-      .join(", ")
-      .replace(/, ([^,]*)$/, " y $1")} también </span>
-    </li>
+    <li><strong>Viaje a:</strong> <span data-query="scrapbook-data-destination">${scrapbook.where}</span></li>
+    <li><strong>Fecha:</strong> ${scrapbook.when} </li>
+    <li><strong>Viajan:</strong> <span data-query="scrapbook-data-child"> ${scrapbook.who} </span></li>
   `;
   scrapbookData.innerHTML = data;
 };
@@ -56,7 +52,7 @@ const initMainCards = () => {
         break;
 
       case "activity_checklist":
-        // buildActivityPage(pageEl, scrapbook);
+        buildActivityPage(pageEl, page, scrapbook);
         break;
 
       default:
@@ -81,7 +77,10 @@ const scrolltoCard = () => {
 // INIT
 
 const init = async () => {
-  scrapbook = await getScrapbook("c76ff7b8-9893-4bad-9cf8-afbe5884892c");
+  const params = new URLSearchParams(window.location.search);
+  scrapbook = await getScrapbook(params.get("id"));
+
+  scrapbook.pages = pageMock.pages;
 
   initScrapbookData();
   initPagesList();

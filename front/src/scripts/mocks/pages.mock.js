@@ -31,7 +31,7 @@ const pageMock = {
   dateStart: randSoonDate(),
   dateFinish: randFutureDate(),
   destination: randCountry(),
-  people: [randFullName(), randFullName(), randFullName()],
+  child: randFullName(),
   pages: [
     {
       type: "cover",

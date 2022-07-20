@@ -18,17 +18,12 @@ const initCoverListeners = (element, scrapbook) => {
   });
 
   destinationChildName.addEventListener("change", (event) => {
-    const childName = event.currentTarget.value;
-    const peopleList = scrapbook.people;
-    peopleList[0] = childName;
-    document.querySelector(
-      '[data-query="scrapbook-data-child"]'
-    ).innerHTML = `${peopleList
-      .join(", ")
-      .replace(/, ([^,]*)$/, " y $1")} también </span>`;
+    const childNameInput = event.currentTarget.value;
+    document.querySelector('[data-query="scrapbook-data-child"]').innerHTML =
+      childNameInput;
   });
   //   modifyScrapbook(scrapbook.id, {
-  //     people: peopleList,
+  //     people: childNameInput,
   //   });
 };
 
@@ -36,11 +31,11 @@ const buildCoverPage = (element, scrapbook) => {
   const coverPage = `
       <p class="font-ligature fs-3">Mi viaje a</p>
       <div>
-        <input class="font-ligature fs-5" type="text" id="destination" data-query="destination-input" value="${scrapbook.destination}">
+        <input class="font-ligature fs-5" type="text" id="destination" data-query="destination-input" value="${scrapbook.where}">
       </div>
       <p class="font-ligature fs-3">por</p>
       <div>
-        <input class="font-ligature fs-5" type="text" id="people" data-query="destination-child" value="${scrapbook.people && scrapbook.people[0]}">
+        <input class="font-ligature fs-5" type="text" id="people" data-query="destination-child" value="${scrapbook.who}">
       </div>
     `;
 
