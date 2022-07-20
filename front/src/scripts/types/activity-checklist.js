@@ -32,7 +32,7 @@ const updateImageSlot = async (event) => {
   const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
   const page = event.currentTarget.getAttribute("data-page");
   const index = event.currentTarget.getAttribute("data-index");
-  const image = event.currentTarget.value;
+  const image = event.currentTarget.files[0];
   await uploadImage(scrapbook, page, index, image);
 };
 

@@ -44,7 +44,7 @@ const uploadData = (scrapbookId, pageId, slotId, data) => {
 
   fetch(url, {
     method: "POST",
-    body: JSON.stringify(texdatat),
+    body: JSON.stringify(data),
   })
     .then((res) => res.json())
     .catch((error) => console.error("Error:", error))
