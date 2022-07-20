@@ -1,4 +1,4 @@
-const buildActivityPage = (scrapbook) => {
+const buildActivityPage = (element, scrapbook) => {
   return console.log("buildActivityPage()", scrapbook);
 };
 

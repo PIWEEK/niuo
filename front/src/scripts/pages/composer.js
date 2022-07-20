@@ -1,6 +1,6 @@
 import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
 // import { buildActivityPage } from "../types/activity-checklist";
-// import { buildCoverPage } from "../types/cover";
+import { buildCoverPage } from "../types/cover";
 
 let scrapbook = getScrapbook();
 
@@ -37,10 +37,27 @@ const initPagesList = () => {
 };
 
 const initMainCards = () => {
-  // setPageIndex(0);
-  // setPageClass("cover");
-  // buildCoverPage(scrapbook);
-  buildCards(scrapbook);
+  const pageCard = document.querySelector('[data-query="template-card"]');
+  console.log(scrapbook.pages);
+  scrapbook.pages.forEach((page) => {
+    const pageEl = document.createElement("div");
+    pageEl.classList.add("body-content");
+    pageEl.classList.add(`tpl-${page.type}`);
+    switch (page.type) {
+      case "cover":
+        buildCoverPage(pageEl, scrapbook);
+        break;
+
+      case "activity_checklist":
+        // buildActivityPage(pageEl, scrapbook);
+        break;
+
+      default:
+        console.error("this type does not exist");
+        break;
+    }
+    pageCard.append(pageEl);
+  });
 };
 
 const initCardListener = () => {
@@ -53,43 +70,6 @@ const initCardListener = () => {
 const scrolltoCard = () => {
   console.log("scrolltoCard");
 };
-
-// Main Card types
-
-// const buildMainCard = (event) => {
-//   const type = event.currentTarget.getAttribute("data-type");
-//   const index = event.currentTarget.getAttribute("data-index");
-//   scrapbook = getScrapbook();
-
-//   setPageIndex(index);
-//   setPageClass(type);
-
-//   switch (type) {
-//     case "cover":
-//       buildCoverPage(scrapbook);
-//       break;
-
-//     case "activity_checklist":
-//       buildActivityPage(scrapbook);
-//       break;
-
-//     default:
-//       console.error("this type does not exist");
-//       break;
-//   }
-// };
-
-// const setPageIndex = (index) => {
-//   const pageIndexEl = document.querySelector('[data-query="page-index"]');
-//   const indexNum = Number(index) + 1;
-//   pageIndexEl.textContent = `Página ${indexNum}`;
-// };
-
-// const setPageClass = (type) => {
-//   const pageCard = document.querySelector('[data-query="template-card"]');
-//   pageCard.classList.remove();
-//   pageCard.classList.add("body-content", `tpl-${type}`);
-// };
 
 // INIT
 

@@ -118,13 +118,14 @@ header {
 
 .body-wrapper {
   flex-grow: 1;
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  overflow: scroll;
+  padding-inline-end: 2rem;
 
   & .body-inner {
-    width: 920px;
+    display: flex;
+    gap: 2rem;
 
     & .page {
       font-style: italic;
@@ -139,7 +140,9 @@ header {
       border-radius: 4px;
       padding: var(--space-2);
       text-align: center;
-      height: 650px;
+      max-block-size: 650px;
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
 
       & p {
         margin: 0;
@@ -162,7 +165,6 @@ header {
 }
 
 .tpl-activity_checklist {
-
   & .intro {
     padding: var(--space-1) 0;
   }

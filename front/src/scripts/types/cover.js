@@ -32,8 +32,7 @@ const initCoverListeners = (scrapbook) => {
   //   });
 };
 
-const buildCoverPage = (scrapbook) => {
-  const pageCard = document.querySelector('[data-query="template-card"]');
+const buildCoverPage = (element, scrapbook) => {
   const coverPage = `
       <p class="font-ligature fs-3">Mi viaje a</p>
       <div>
@@ -45,8 +44,8 @@ const buildCoverPage = (scrapbook) => {
       </div>
     `;
 
-  pageCard.innerHTML = coverPage;
-  initCoverListeners(scrapbook);
+  element.innerHTML = coverPage;
+  // initCoverListeners(scrapbook);
 };
 
 export { buildCoverPage };
