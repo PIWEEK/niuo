@@ -57,10 +57,21 @@ header {
     margin-right: var(--space-1);
   }
 }
+
 .content {
-  flex-grow: 1;
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - var(--header-height));
+  flex-shrink: 0;
+}
+
+.index-placeholder {
+  flex-flow: column;
+  display: flex;
+  text-align: center;
+  align-items: center;
 }
 
 .cards-wrapper {
@@ -223,5 +234,6 @@ header {
 
   &.btn-big {
     height: 60px;
+    font-size: 20px;
   }
 }
