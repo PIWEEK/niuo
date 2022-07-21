@@ -273,7 +273,8 @@ header {
       border-radius: 4px;
       padding: var(--space-2);
       text-align: center;
-      block-size: 900px;
+      block-size: 148mm;
+      inline-size: 210mm;
       aspect-ratio: 1.41 / 1;
       flex-shrink: 0;
 
