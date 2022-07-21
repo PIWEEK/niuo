@@ -34,8 +34,9 @@ const updateImageSlot = async (event) => {
   const index = input.getAttribute("data-index");
   await uploadImage(scrapbook, page, index, event.target.files[0]);
 
-  input.parentElement.querySelector("img").src =
-    `http://localhost:8000/api/scrapbooks/${scrapbook}/pages/${page}/${index}/image`
+  input.parentElement.querySelector(
+    "img"
+  ).src = `http://localhost:8000/api/scrapbooks/${scrapbook}/pages/${page}/${index}/image`;
 };
 
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
@@ -46,12 +47,8 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
   `;
   element.innerHTML = checklistEl;
 
-  const gridWrapper = document.createElement("div");
-  const gridStart = document.createElement("div");
-  const gridEnd = document.createElement("div");
-  gridStart.classList.add("grid-start");
-  gridEnd.classList.add("grid-end");
-  gridWrapper.classList.add("checklist");
+  const grid = document.createElement("div");
+  grid.classList.add("checklist");
 
   page.slots.forEach((slot, index) => {
     let slotEl;
@@ -80,10 +77,10 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       if (slot.state === "EMPTY") {
         imgEl.setAttribute("src", "/checklist-image-placeholder.svg");
       } else {
-         imgEl.setAttribute(
-           "src",
-           `http://localhost:8000/api/scrapbooks/${scrapbook.id}/pages/${pageIndex}/${index}/image`
-         );
+        imgEl.setAttribute(
+          "src",
+          `http://localhost:8000/api/scrapbooks/${scrapbook.id}/pages/${pageIndex}/${index}/image`
+        );
       }
     } else if (slot.type === "text") {
       slotEl = document.createElement("input");
@@ -95,20 +92,10 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl.setAttribute("data-index", index);
       slotEl.value = slot.text;
     }
-    if (index <= 6) {
-      gridStart.append(slotEl);
-    }
-    if (index === 6) {
-      slotEl === null;
-    }
-    if (index >= 6 && index <= 12) {
-      gridEnd.insertBefore(slotEl, gridEnd.firstChild);
-    }
+    grid.append(slotEl);
   });
 
-  gridWrapper.append(gridStart);
-  gridWrapper.append(gridEnd);
-  element.append(gridWrapper);
+  element.append(grid);
 
   initInputListeners(element);
 };
