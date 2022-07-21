@@ -1,2 +1,35 @@
 @import "npm:gutenberg-css/dist/gutenberg.min.css";
 @import "npm:gutenberg-css/dist/themes/modern.min.css";
+@import "./tools/swatches.css";
+
+@media print {
+  @page {
+    size: A4 portrait;
+  }
+
+  body {
+    padding: 0;
+    color: red;
+  }
+
+  .content-composer {
+    width: auto;
+  }
+
+  .body-wrapper {
+    align-items: flex-start;
+
+    & .body-inner {
+      flex-direction: column;
+      gap: 0;
+
+      & .body-content {
+        border: none;
+
+        &:nth-child(odd) {
+          border-bottom: 1px dashed var(--color-dark);
+        }
+      }
+    }
+  }
+}
