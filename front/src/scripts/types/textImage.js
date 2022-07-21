@@ -45,7 +45,7 @@ const buildTextImagePage = (pageEl, page, pageIndex, scrapbook) => {
       <textarea data-query="text-image-tpl-textarea" class="text-image-tpl-textarea" aria-label="texto sobre el viaje" data-scrapbook="${
         scrapbook.id
       }" data-page="${pageIndex}" data-index="1">
-        ${page.slots[1].text}
+        ${page.slots[1].text ? page.slots[1].text : ""}
       </textarea>
     </div>
     <div class="text-image-tpl-image">

@@ -529,21 +529,8 @@ header {
       width: 121px;
       height: 102px;
       flex-shrink: 0;
-      background-image: url("/src/assets/emotion-1.svg");
       background-position: center;
       background-repeat: no-repeat;
-    }
-    & .e-2 {
-      background-image: url("/src/assets/emotion-2.svg");
-    }
-    & .e-3 {
-      background-image: url("/src/assets/emotion-3.svg");
-    }
-    & .e-4 {
-      background-image: url("/src/assets/emotion-4.svg");
-    }
-    & .e-5 {
-      background-image: url("/src/assets/emotion-5.svg");
     }
   }
 }
@@ -719,7 +706,6 @@ header {
     gap: 1em;
     overflow-y: scroll;
     overflow-x: hidden;
-
 
     & li {
       cursor: pointer;
