@@ -300,6 +300,10 @@ header {
   display: flex;
   flex-flow: column;
   justify-content: center;
+  background-image: url("/src/assets/quokka_travel.svg"), url("/src/assets/paper_plane_flying.svg");
+  background-position: 40px 20px, right 450px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 410px, auto;
 }
 
 .tpl-activity_checklist {
