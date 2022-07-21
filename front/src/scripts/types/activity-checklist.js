@@ -41,7 +41,8 @@ const updateImageSlot = async (event) => {
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
   const checklistEl = `
   <div class="summary">El viaje de ${scrapbook.who} a Sevilla</div>
-  <p class="font-ligature fs-2 intro">¡Hola ${scrapbook.who}! En tu viaje a ${scrapbook.where} estás viendo cosas muy chulas. Encuentra estas
+  <p class="font-ligature fs-2 intro">
+  ¡Hola ${scrapbook.who}! En tu viaje a ${scrapbook.where} estás viendo cosas muy chulas. Encuentra estas
   y rodéalas con un círculo:</p>
   `;
   element.innerHTML = checklistEl;

@@ -361,6 +361,33 @@ header {
   }
 }
 
+.tpl-emotions {
+  & .intro {
+    padding: var(--space-2) 4em var(--space-1) 4em;
+    margin-bottom: var(--space-2) !important;
+    background-image: url("/src/assets/quokka-default.svg");
+    background-position: left top;
+    background-repeat: no-repeat;
+    border-bottom: 2px solid var(--color-stroke);
+  }
+  & .emotions {
+    display: flex;
+    justify-content: space-evenly;
+    & .emotion {
+      width: 97px;
+      height: 93px;
+      flex-shrink: 0;
+      background-image: url("/src/assets/emotion-1.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    & .e-2 { background-image: url("/src/assets/emotion-2.svg"); }
+    & .e-3 { background-image: url("/src/assets/emotion-3.svg"); }
+    & .e-4 { background-image: url("/src/assets/emotion-4.svg"); }
+    & .e-5 { background-image: url("/src/assets/emotion-5.svg"); }
+  }
+}
+
 .button {
   display: flex;
   background-color: var(--color-highlight);
