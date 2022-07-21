@@ -189,7 +189,7 @@ header {
     flex-flow: column;
     overflow-x: auto;
     gap: var(--space-1);
-    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
+    padding: var(--space-1) var(--space-1) 0 var(--space-2);
 
     & .card {
       position: relative;
@@ -364,28 +364,33 @@ header {
 }
 
 .cards-wrapper .cards-inner #add-card.card {
-  background: #f9c74f40;
+  background: transparent;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   font-size: 48px;
+  transition: background-color 0.4s;
+  
+  &:hover {
+    background-color: #f9c74f40;
+  }
 }
 
 .cards-wrapper .cards-inner .new-card-popup {
   background: white;
   border: 1px solid var(--color-stroke);
   display: grid;
-  gap: 8px;
+  gap: 15px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
   height: auto;
   left: 220px;
-  padding: 8px;
+  padding: 30px;
   position: absolute;
   width: auto;
   z-index: 10;
   border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(49, 54, 56, 0.1);
-  margin-top: -200px;
+  margin-top: -250px;
 
   &::before {
     content: " ";
@@ -402,8 +407,13 @@ header {
   }
 
   & button.card {
-    color: black;
+    color: var(--color-dark);
+    font-family: DM Sans, sans-serif;
+    font-size: 14px;
     border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    padding: 10px;
+    transition: background-color 0.4s;
 
     &:hover {
       background: var(--color-highlight);
