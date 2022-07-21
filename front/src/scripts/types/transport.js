@@ -3,15 +3,21 @@ const buildTransportPage = (pageEl, page, index, scrapbook) => {
     pageEl.innerHTML = `
     <div class="summary">El viaje de ${scrapbook.who} a ${scrapbook.where}</div>
     <p class="font-ligature fs-2 intro">
-    TRAAAAAANSPORT
-    ¿Cómo te lo has pasado en tu viaje a ${scrapbook.where}?<br>Elije la emoción y dibujale el cuerpo
+    ¿En qué medios de transporte has montado en tu viaje?<br>Rodéalos y si quieres puedes colorearlos también.
     </p>
-    <div class="emotions">
-      <div class="emotion e-1"></div>
-      <div class="emotion e-2"></div>
-      <div class="emotion e-3"></div>
-      <div class="emotion e-4"></div>
-      <div class="emotion e-5"></div>
+    <div class="transport-list">
+        <div class="transport t-plane"></div>
+        <div class="t-name">barco</div>
+        <div class="transport t-boat"></div>
+        <div class="t-name">avión</div>
+        <div class="transport t-scooter"></div>
+        <div class="t-name">patinete</div>
+        <div class="transport t-train"></div>
+        <div class="t-name">tren</div>
+        <div class="transport t-bus"></div>
+        <div class="t-name">autobus</div>
+        <div class="transport t-car"></div>
+        <div class="t-name">coche</div>
     </div>
       `;
   };
