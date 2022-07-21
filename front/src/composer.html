@@ -8,6 +8,7 @@
   }'>
   </include>
   <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/print.css" media="print" />
   <script type="module" src="scripts/app.js"></script>
   <script type="module" src="scripts/pages/composer.js"></script>
 </head>
@@ -17,7 +18,7 @@
 
   <div class="content-composer">
 
-    <section class="cards-wrapper">
+    <section class="cards-wrapper no-print">
       <ul class="cards-info" data-query="scrapbook-data">
       </ul>
 
@@ -47,7 +48,7 @@
         </div>
       </div>
     </section>
-    
+
     <main class="body-wrapper">
       <div class="body-inner" data-query="template-card">
 
