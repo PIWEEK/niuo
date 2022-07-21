@@ -42,51 +42,61 @@ const initPagesList = () => {
     pageEl.setAttribute("data-type", page.type);
     pageEl.setAttribute("data-query", "page-card");
     pageEl.setAttribute("data-index", index);
+
+    const pageCard = document.createElement("div");
+    pageCard.classList = "page-thumbnail";
+    buildCard(pageCard, page, index);
+
+    pageEl.append(pageCard);
     pagesList.append(pageEl);
   });
 
   initCardListener();
 };
 
+const buildCard = (pageCard, page, index) => {
+  const pageEl = document.createElement("div");
+  pageEl.classList.add("body-content");
+  pageEl.classList.add(`tpl-${page.type}`);
+  pageEl.setAttribute("data-index", index);
+
+  switch (page.type) {
+  case "cover":
+    buildCoverPage(pageEl, scrapbook);
+    break;
+
+  case "activity_checklist":
+    buildActivityPage(pageEl, page, index, scrapbook);
+    break;
+
+  case "emotions":
+    buildEmotionsPage(pageEl, page, index, scrapbook);
+    break;
+
+  case "transport":
+    buildTransportPage(pageEl, page, index, scrapbook);
+    break;
+
+  case "color":
+    buildColorPage(pageEl, page, index, scrapbook);
+    break;
+
+  case "text_image":
+    buildTextImagePage(pageEl, page, index, scrapbook);
+    break;
+
+  default:
+    console.error("this type does not exist");
+    break;
+  }
+  pageCard.append(pageEl);
+}
+
 const initMainCards = () => {
   const pageCard = document.querySelector('[data-query="template-card"]');
 
   scrapbook.pages.forEach((page, index) => {
-    const pageEl = document.createElement("div");
-    pageEl.classList.add("body-content");
-    pageEl.classList.add(`tpl-${page.type}`);
-    pageEl.setAttribute("data-index", index);
-
-    switch (page.type) {
-      case "cover":
-        buildCoverPage(pageEl, scrapbook);
-        break;
-
-      case "activity_checklist":
-        buildActivityPage(pageEl, page, index, scrapbook);
-        break;
-
-      case "emotions":
-        buildEmotionsPage(pageEl, page, index, scrapbook);
-        break;
-
-      case "transport":
-        buildTransportPage(pageEl, page, index, scrapbook);
-        break;
-
-      case "color":
-        buildColorPage(pageEl, page, index, scrapbook);
-        break;
-
-      case "text_image":
-        buildTextImagePage(pageEl, page, index, scrapbook);
-        break;
-
-      default:
-        console.error("this type does not exist");
-        break;
-    }
-    pageCard.append(pageEl);
+    buildCard(pageCard, page, index);
   });
 };
 
@@ -147,8 +157,8 @@ const updateImageSlotFile = async (event) => {
     const {scrapbookId, page, index} = popupData;
     await uploadImage(scrapbookId, page, index, event.target.files[0]);
 
-    const img = document.querySelector(`[for='checklist-input-image-${page}-${index}'] img`)
-    if (img){
+    const imgs = document.querySelectorAll(`[for='checklist-input-image-${page}-${index}'] img`)
+    for (const img of imgs) {
       img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
     }
 
@@ -164,8 +174,8 @@ const updateImageSlotUrl = async (url) => {
 
     await uploadImageUrl(scrapbookId, page, index, url);
 
-    const img = document.querySelector(`[for='checklist-input-image-${page}-${index}'] img`)
-    if (img){
+    const imgs = document.querySelectorAll(`[for='checklist-input-image-${page}-${index}'] img`)
+    for (const img of imgs) {
       img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
     }
 

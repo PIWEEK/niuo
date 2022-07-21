@@ -226,6 +226,30 @@ header {
       border-radius: 4px;
       flex-shrink: 0;
 
+      & .page-thumbnail {
+        pointer-events: none;
+        border: 1px solid var(--color-border);
+        padding: var(--space-2);
+        text-align: center;
+        block-size: 148mm;
+        inline-size: 210mm;
+        aspect-ratio: 1.41 / 1;
+        background-color: #fff;
+        border-radius: 4px;
+        flex-shrink: 0;
+        position: relative;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: top left;
+        transform: scale(0.15);
+
+        & p {
+          margin: 0;
+        }
+      }
+
       &:before {
         position: absolute;
         top: 0;
@@ -275,36 +299,36 @@ header {
       font-size: 1.4em;
       margin-bottom: 0.2em;
     }
+  }
+}
 
-    & .body-content {
-      position: relative;
-      border: 1px solid var(--color-border);
-      background-color: white;
-      border-radius: 4px;
-      padding: var(--space-2);
-      text-align: center;
-      block-size: 148mm;
-      inline-size: 210mm;
-      aspect-ratio: 1.41 / 1;
-      flex-shrink: 0;
+.body-content {
+  position: relative;
+  border: 1px solid var(--color-border);
+  background-color: white;
+  border-radius: 4px;
+  padding: var(--space-2);
+  text-align: center;
+  block-size: 148mm;
+  inline-size: 210mm;
+  aspect-ratio: 1.41 / 1;
+  flex-shrink: 0;
 
-      & p {
-        margin: 0;
-      }
+  & p {
+    margin: 0;
+  }
 
-      & .summary {
-        position: absolute;
-        font-family: var(--font-ligature);
-        top: var(--space-1);
-        padding: 0.5em 1em 1em 2em;
-        right: var(--space-1);
-        font-size: 16px;
-        background-image: url("/src/assets/pin.svg");
-        background-position: left top;
-        background-repeat: no-repeat;
-        background-size: 20px;
-      }
-    }
+  & .summary {
+    position: absolute;
+    font-family: var(--font-ligature);
+    top: var(--space-1);
+    padding: 0.5em 1em 1em 2em;
+    right: var(--space-1);
+    font-size: 16px;
+    background-image: url("/src/assets/pin.svg");
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 20px;
   }
 }
 
