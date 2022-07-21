@@ -24,6 +24,7 @@ const listScrapbooks = async () => {
 const createScrapbook = async (data) => {
   const url = `${config.apiUrl}/scrapbooks`;
 
+  console.log(">>>", url);
   const res = await fetch(url, {
     method: "PUT",
     body: JSON.stringify(data),

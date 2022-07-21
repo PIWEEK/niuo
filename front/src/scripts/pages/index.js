@@ -32,13 +32,28 @@ const addScrapbookToList = (sb) => {
   li.classList = "scrapbook";
   li.innerHTML = buildCard(sb);
 
+  li.querySelector(".ac-share").addEventListener("click", () => {
+    console.log("share", sb.id);
+  });
+  
+  li.querySelector(".ac-duplicate").addEventListener("click", () => {
+    console.log("duplicate", sb.id);
+  });
+  
+  li.querySelector(".ac-delete").addEventListener("click", () => {
+    console.log("delete", sb.id);
+  });
+  
   scrapbooksList.append(li);
 };
 
 const loadScrapbooks = async () => {
-  const newScrapbookBtn = document.getElementById("newScrapbookBtn");
-  newScrapbookBtn.addEventListener("click", handleNewScrapbook);
+  const elems = document.querySelectorAll("[data-action='new-scrapbook']");
 
+  for (const elem of elems) {
+    elem.addEventListener("click", handleNewScrapbook);
+  }
+  
   const scrapbooks = await listScrapbooks();
 
   if (scrapbooks.length === 0) {
@@ -53,7 +68,7 @@ const loadScrapbooks = async () => {
 
 
 const handleNewScrapbook = async (event) => {
-  
+  event.preventDefault();
   const sb = await createScrapbook({
     name: "Mi viaje",
     who: "Alguien",
