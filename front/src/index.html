@@ -20,8 +20,10 @@
     <p>Viajando juntos</p>
     <a href="composer.html" class="button">Crear nuevo viaje</a>
   </header>
+
   <section class="content-index">
-    <div class="index-placeholder">
+    
+    <div class="index-placeholder" style="display: none;">
       <p class="font-ligature fs-2">
         Todavía no tienes ningún viaje creado <br>
         ¿A dónde nos vamos hoy?
@@ -33,15 +35,24 @@
     </div>
 
     <ul id="scrapbooks-list">
-      
+      <!-- Here so its easy to change the layout -->
+      <!--
       <li class="scrapbook">
         <div class="actions">
           <button class="ac-share"></button>
           <button class="ac-duplicate"></button>
           <button class="ac-delete"></button>
         </div>
+
         <a href="">
-          <img src="../src/assets/scrapbook-thumb.png" alt="">
+          <div class="scrapbook-cover">
+            <div class="tpl-cover">
+              <p class="font-ligature fs-4">Mi viaje a</p>
+              <p class="font-ligature fs-7">En algún sitio</p>
+              <p class="font-ligature fs-4">por</p>
+              <p class="font-ligature fs-7">Alguien</p>
+            </div>
+          </div>
           <ul class="cards-info" data-query="scrapbook-data">
             <li><strong>Viaje a:</strong> <span data-query="scrapbook-data-destination">undefined</span></li>
             <li><strong>Fecha:</strong> undefined </li>
@@ -49,7 +60,7 @@
           </ul>
         </a>
       </li>
-
+      -->
     </ul>
   </section>
 
