@@ -65,6 +65,7 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       inputEl.setAttribute("data-scrapbook", scrapbook.id);
       inputEl.setAttribute("data-page", pageIndex);
       inputEl.setAttribute("data-index", index);
+      inputEl.setAttribute("maxlenght", 30);
       inputEl.classList.add("checklist-input-image");
       // Create Image
       imgEl = document.createElement("img");
@@ -95,6 +96,7 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl.setAttribute("data-scrapbook", scrapbook.id);
       slotEl.setAttribute("data-page", pageIndex);
       slotEl.setAttribute("data-index", index);
+      inputEl.setAttribute("maxlenght", 20);
       if (!!slot.text) {
         slotEl.value = slot.text;
       }

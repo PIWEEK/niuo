@@ -1,7 +1,10 @@
 
 const buildColorPage = (pageEl, page, index, scrapbook) => {
   pageEl.innerHTML = `
-      <h1>Pagina de colores</h1>
+  <div class="summary">El viaje de ${scrapbook.who} a Sevilla</div>
+  <p class="font-ligature intro">
+  ¡A colorear!
+  </p>
     `;
 };
 

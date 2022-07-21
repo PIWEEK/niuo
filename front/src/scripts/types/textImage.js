@@ -1,7 +1,10 @@
 
 const buildTextImagePage = (pageEl, page, index, scrapbook) => {
   pageEl.innerHTML = `
-      <h1>Pagina de text+image</h1>
+  <div class="summary">El viaje de ${scrapbook.who} a ${scrapbook.where}</div>
+  <p class="font-ligature intro">
+  ¡Qué ilusión! TEXTO CON IMAGEN
+  </p>
     `;
 };
 
