@@ -2,6 +2,11 @@ import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
 import { createPage } from "../endpoints/pages.endpoint";
 import { buildActivityPage } from "../types/activity-checklist";
 import { buildCoverPage } from "../types/cover";
+
+import { buildEmotionsPage } from "../types/emotions";
+import { buildColorPage } from "../types/color";
+import { buildTextImagePage } from "../types/textImage";
+
 import { pageMock } from "../mocks/pages.mock";
 
 let scrapbook;
@@ -42,11 +47,12 @@ const initPagesList = () => {
 
 const initMainCards = () => {
   const pageCard = document.querySelector('[data-query="template-card"]');
-  console.log(scrapbook.pages);
+
   scrapbook.pages.forEach((page, index) => {
     const pageEl = document.createElement("div");
     pageEl.classList.add("body-content");
     pageEl.classList.add(`tpl-${page.type}`);
+
     switch (page.type) {
       case "cover":
         buildCoverPage(pageEl, scrapbook);
@@ -54,6 +60,18 @@ const initMainCards = () => {
 
       case "activity_checklist":
         buildActivityPage(pageEl, page, index, scrapbook);
+        break;
+
+      case "emotions":
+        buildEmotionsPage(pageEl, page, index, scrapbook);
+        break;
+
+      case "color":
+        buildColorPage(pageEl, page, index, scrapbook);
+        break;
+
+      case "text_image":
+        buildTextImagePage(pageEl, page, index, scrapbook);
         break;
 
       default:

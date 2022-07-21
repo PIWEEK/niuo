@@ -96,6 +96,13 @@ func (a *App) CreateScrapbook(w http.ResponseWriter, r *http.Request) {
 		scrapbook.User = user
 
 		a.saveScrapbook(&scrapbook)
+
+		page := PageDB{}
+		page.Type = "cover"
+		page.Order = 0
+		page.ScrapbookID = scrapbook.ID
+		a.savePage(&page)
+
 		result := scrapbook.FormatBasic()
 		respondWithJSON(w, 200, result)
 	}
@@ -114,28 +121,44 @@ func (a *App) GetScrapbookDetail(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) CreateSlots(pageType string) []SlotDataInput {
 	switch pageType {
-	case "activity_checklist":
-		return []SlotDataInput {
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
+	  case "emotions":
+		  return []SlotDataInput {}
 
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
+	  case "color":
+		  return []SlotDataInput {
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+			}
 
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
+		case "text_image":
+		  return []SlotDataInput {
+			  SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+			}
 
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
+	  case "activity_checklist":
+		  return []SlotDataInput {
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
 
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
 
-			SlotDataInput {Type: "image"},
-			SlotDataInput {Type: "text"},
-		}
-	default:
-		return []SlotDataInput {}
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+
+				SlotDataInput {Type: "image"},
+				SlotDataInput {Type: "text"},
+			}
+
+	  default:
+		  return []SlotDataInput {}
 	}
 }
 
@@ -251,7 +274,7 @@ func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 			}
 
 			a.saveSlotImage(&slotImage)
-			respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })	
+			respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })
 		}
 	}
 }
@@ -270,7 +293,7 @@ func (a *App) GetSlotImage(w http.ResponseWriter, r *http.Request) {
 			a.getSlotImage(&slotImage, page.ID, slotNumber)
 
 			w.WriteHeader(200)
-			w.Write(slotImage.Data)	
+			w.Write(slotImage.Data)
 		}
 	}
 }
@@ -298,4 +321,46 @@ func (a *App) SetSlotText(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (a *App) DuplicateScrapbook(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
 
+	if ok {
+		pages := a.retrievePages(scrapbook.ID)
+		slots := a.retrieveSlots(scrapbook.ID)
+
+		for _, page := range pages {
+			pageId := page.ID
+
+			page.Base = Base{}
+			a.savePage(&page)
+
+			for _, slot := range slots {
+				if slot.PageId == pageId {
+					slotNumber := slot.NumSlot
+
+					slot.Base = Base{}
+					slot.PageId = page.ID
+					a.saveSlot(&slot)
+
+					if slot.Type == "IMAGE" && slot.Status == "FILLED" {
+						var slotImage SlotImageDB
+						a.getSlotImage(&slotImage, pageId, slotNumber)
+
+						slotImage.PageId = page.ID
+						a.saveSlotImage(&slotImage)
+					}
+				}
+			}
+		}
+
+		scrapbook.Base = Base{}
+		a.saveScrapbook(&scrapbook)
+
+		result := scrapbook.FormatAdvanced(pages, slots)
+		respondWithJSON(w, 200, result)
+	}
+
+}
+
+func (a *App) MovePage(w http.ResponseWriter, r *http.Request) {
+}

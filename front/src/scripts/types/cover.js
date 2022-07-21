@@ -30,8 +30,6 @@ const initCoverListeners = (element, scrapbook) => {
       who: childNameInput,
     });
   });
-
-
 };
 
 const buildCoverPage = (element, scrapbook) => {

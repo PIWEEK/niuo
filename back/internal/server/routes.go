@@ -24,6 +24,10 @@ func (a *App) initRoutes() {
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}", a.DeleteScrapbook).Methods("DELETE")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}", a.UpdateScrapbook).Methods("POST")
 
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/duplicate", a.Empty).Methods("OPTIONS")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/duplicate", a.DuplicateScrapbook).Methods("POST")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/movePage", a.Empty).Methods("OPTIONS")
+
 	// Pages
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages", a.Empty).Methods("OPTIONS")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages", a.AddScrapbookPage).Methods("PUT")
@@ -31,6 +35,8 @@ func (a *App) initRoutes() {
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}", a.Empty).Methods("OPTIONS")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}", a.UpdateScrapbookPage).Methods("POST")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}", a.DeleteScrapbookPage).Methods("DELETE")
+
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/movePage/{newIndex}", a.MovePage).Methods("POST")
 
 	// Slots
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/image", a.Empty).Methods("OPTIONS")
