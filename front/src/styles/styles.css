@@ -374,8 +374,8 @@ header {
     display: flex;
     justify-content: space-evenly;
     & .emotion {
-      width: 97px;
-      height: 93px;
+      width: 121px;
+      height: 102px;
       flex-shrink: 0;
       background-image: url("/src/assets/emotion-1.svg");
       background-position: center;
