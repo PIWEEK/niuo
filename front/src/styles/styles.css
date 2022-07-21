@@ -324,6 +324,46 @@ header {
   }
 }
 
+.tpl-text_image {
+  position: relative;
+  background-image: url("/src/assets/quokka-map.svg");
+  background-position: 540px 110px;
+  background-repeat: no-repeat;
+  background-size: 240px;
+  & .intro {
+    font-size: 24px;
+    width: 340px;
+    margin-top: 80px !important;
+    margin-left: 80px !important;
+    & .where {
+      display: block;
+      font-size: 36px;
+    }
+  }
+  & .image-decoration {
+    width: 347px;
+    height: 212px;
+    background-image: url("/src/assets/media_background.svg");
+    background-repeat: no-repeat;
+    background-size: 347px 212px;
+    position: absolute;
+    right: 20px;
+    bottom: 40px;
+    z-index: 2;
+  }
+  & .image {
+    position: absolute;
+    background-color: aquamarine;
+    width: 301px;
+    height: 174px;
+    background-color: #7fffd4;
+    position: absolute;
+    top: 383px;
+    left: 502px;
+    z-index: 1;
+  }
+}
+
 .tpl-activity_checklist {
   & .intro {
     font-size: 22px;
