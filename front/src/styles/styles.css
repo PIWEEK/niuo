@@ -292,10 +292,11 @@ header {
         top: var(--space-1);
         padding: 0.5em 1em 1em 2em;
         right: var(--space-1);
-        font-size: 20px;
+        font-size: 16px;
         background-image: url("/src/assets/pin.svg");
         background-position: left top;
         background-repeat: no-repeat;
+        background-size: 20px;
       }
     }
   }
@@ -306,15 +307,15 @@ header {
   flex-flow: column;
   justify-content: center;
   background-image: url("/src/assets/quokka_travel.svg"), url("/src/assets/paper_plane_flying.svg");
-  background-position: 40px 20px, right 450px;
+  background-position: 10px 0px, right 450px;
   background-repeat: no-repeat, no-repeat;
-  background-size: 410px, auto;
+  background-size: 300px, auto;
 }
 
 .tpl-activity_checklist {
   & .intro {
-    padding: var(--space-2) 4em var(--space-1) 4em;
-    margin-bottom: var(--space-2) !important;
+    font-size: 22px;
+    padding: 30px 2em 10px 7em;
     background-image: url("/src/assets/quokka_lens.svg");
     background-position: left top;
     background-repeat: no-repeat;
@@ -324,7 +325,7 @@ header {
   & .checklist {
     align-items: center;
     display: grid;
-    gap: var(--space-2);
+    gap: 10px;
     grid-template-columns: repeat(2, auto 1fr);
     max-width: 100%;
     list-style: none;
@@ -340,36 +341,37 @@ header {
       inset-block-start: 0;
       inset-inline-start: 0;
       visibility: hidden;
-      width: 100%;
-      height: 100%;
+      width: 140px;
+      height: 140px;
       z-index: 2;
       cursor: pointer;
     }
 
     & .image {
-      width: 160px;
-      height: 160px;
+      width: 140px;
+      height: 140px;
       flex-shrink: 0;
       cursor: pointer;
     }
     & .text {
-      font-size: 2.4em;
+      font-size: 1.8em;
       font-family: var(--font-ligature);
       text-align: left;
     }
 
     & .checklist-image-wrapper {
-      width: 160px;
-      height: 160px;
+      width: 140px;
+      height: 140px;
       background: url("/src/assets/blob-1.svg") no-repeat center;
+      background-size: 140px;
     }
   }
 }
 
 .tpl-emotions {
   & .intro {
+    font-size: 22px;
     padding: var(--space-2) 4em var(--space-1) 4em;
-    margin-bottom: var(--space-2) !important;
     background-image: url("/src/assets/quokka-default.svg");
     background-position: left top;
     background-repeat: no-repeat;
@@ -378,6 +380,7 @@ header {
   & .emotions {
     display: flex;
     justify-content: space-evenly;
+    margin-top: var(--space-1);
     & .emotion {
       width: 121px;
       height: 102px;

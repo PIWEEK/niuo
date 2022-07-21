@@ -4,4 +4,5 @@ input[type="text"] {
   font-family: Sofia;
   inline-size: 80%;
   text-align: center;
+  background: transparent;
 }

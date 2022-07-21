@@ -34,13 +34,13 @@ const initCoverListeners = (element, scrapbook) => {
 
 const buildCoverPage = (element, scrapbook) => {
   const coverPage = `
-      <p class="font-ligature fs-3">Mi viaje a</p>
+      <p class="font-ligature fs-2">Mi viaje a</p>
       <div>
-        <input class="font-ligature fs-5" type="text" id="destination" data-query="destination-input" value="${scrapbook.where}">
+        <input class="font-ligature fs-4" type="text" id="destination" data-query="destination-input" value="${scrapbook.where}">
       </div>
-      <p class="font-ligature fs-3">por</p>
+      <p class="font-ligature fs-2">por</p>
       <div>
-        <input class="font-ligature fs-5" type="text" id="people" data-query="destination-child" value="${scrapbook.who}">
+        <input class="font-ligature fs-4" type="text" id="people" data-query="destination-child" value="${scrapbook.who}">
       </div>
     `;
 
