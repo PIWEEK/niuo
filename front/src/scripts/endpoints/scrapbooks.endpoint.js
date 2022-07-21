@@ -43,26 +43,23 @@ const getScrapbook = async (id) => {
 const modifyScrapbook = async (id, data) => {
   const url = `${config.apiUrl}/scrapbooks/${id}`;
 
-  await fetch(url, {
+  const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
     ...options,
-  })
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+  });
+
+  return res.json();
 };
 
-const deleteScrapbook = (id) => {
+const deleteScrapbook = async (id) => {
   const url = `${config.apiUrl}/scrapbooks/${id}`;
 
-  fetch(url, {
+  await fetch(url, {
     method: "DELETE",
     ...options,
-  })
-    .then((res) => res.json())
-    .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+  });
+  return;
 };
 
 export {

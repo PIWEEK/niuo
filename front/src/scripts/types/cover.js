@@ -4,6 +4,7 @@ const initCoverListeners = (element, scrapbook) => {
   const destinationInput = element.querySelector(
     '[data-query="destination-input"]'
   );
+
   const destinationChildName = element.querySelector(
     '[data-query="destination-child"]'
   );
@@ -12,19 +13,25 @@ const initCoverListeners = (element, scrapbook) => {
     document.querySelector(
       '[data-query="scrapbook-data-destination"]'
     ).innerHTML = event.currentTarget.value;
-    // modifyScrapbook(scrapbook.id, {
-    //   destination: event.currentTarget.value,
-    // });
+
+    modifyScrapbook(scrapbook.id, {
+      ...scrapbook,
+      where: event.currentTarget.value,
+    });
   });
 
   destinationChildName.addEventListener("change", (event) => {
     const childNameInput = event.currentTarget.value;
     document.querySelector('[data-query="scrapbook-data-child"]').innerHTML =
       childNameInput;
+
+    modifyScrapbook(scrapbook.id, {
+      ...scrapbook,
+      who: childNameInput,
+    });
   });
-  //   modifyScrapbook(scrapbook.id, {
-  //     people: childNameInput,
-  //   });
+
+
 };
 
 const buildCoverPage = (element, scrapbook) => {
