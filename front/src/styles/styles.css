@@ -6,6 +6,22 @@ html {
   color: var(--color-dark);
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin: 10px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -238,6 +254,7 @@ header {
   align-items: center;
   overflow: auto;
   padding-inline-end: 2rem;
+  margin-bottom: 10px;
 
   & .body-inner {
     display: flex;
