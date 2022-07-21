@@ -8,6 +8,7 @@ import { buildCoverPage } from "../types/cover";
 import { buildEmotionsPage } from "../types/emotions";
 import { buildColorPage } from "../types/color";
 import { buildTextImagePage } from "../types/textImage";
+import { buildTransportPage } from "../types/transport";
 
 import { pageMock } from "../mocks/pages.mock";
 
@@ -67,6 +68,10 @@ const initMainCards = () => {
 
       case "emotions":
         buildEmotionsPage(pageEl, page, index, scrapbook);
+        break;
+
+      case "transport":
+        buildTransportPage(pageEl, page, index, scrapbook);
         break;
 
       case "color":
