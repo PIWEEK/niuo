@@ -2,7 +2,7 @@
 const buildEmotionsPage = (pageEl, page, index, scrapbook) => {
 
   pageEl.innerHTML = `
-  <div class="summary">El viaje de ${scrapbook.who} a Sevilla</div>
+  <div class="summary">El viaje de ${scrapbook.who} a  ${scrapbook.where}</div>
   <p class="font-ligature fs-2 intro">
   ¿Cómo te lo has pasado en tu viaje a ${scrapbook.where}?<br>Elije la emoción y dibujale el cuerpo
   </p>
