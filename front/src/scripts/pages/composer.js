@@ -52,6 +52,7 @@ const initMainCards = () => {
     const pageEl = document.createElement("div");
     pageEl.classList.add("body-content");
     pageEl.classList.add(`tpl-${page.type}`);
+    pageEl.setAttribute("data-index", index);
 
     switch (page.type) {
       case "cover":
@@ -84,13 +85,16 @@ const initMainCards = () => {
 
 const initCardListener = () => {
   const btnCards = document.querySelectorAll('[data-query="page-card"]');
+
   btnCards.forEach((btnCard) => {
     btnCard.addEventListener("click", scrolltoCard);
   });
 };
 
-const scrolltoCard = () => {
-  console.log("scrolltoCard");
+const scrolltoCard = (event) => {
+  const idx = event.currentTarget.getAttribute("data-index");
+  const card = document.querySelector(`.body-inner .body-content[data-index='${idx}']`)
+  card.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
 };
 
 const initAddCard = () => {
@@ -122,6 +126,9 @@ const initAddCard = () => {
       scrapbook = result;
       cardPopup.style.display = "none";
       update();
+
+      const card = document.querySelector(`.body-inner .body-content:last-child`)
+      card.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
     });
 
    
