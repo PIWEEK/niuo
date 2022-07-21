@@ -173,6 +173,12 @@ header {
       & .cards-info {
         list-style: none;
         padding: 16px;
+        & li {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 235px;
+        }
       }
 
       &:hover {
