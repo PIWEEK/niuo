@@ -73,12 +73,20 @@
 
     <div class="coco-material">
       <div class="upload-image">
-        Upload Image <input type="file" name="file"></input>
+        <label for="uploadImage" class="button">Upload Image</label>
+        <input type="file" id="uploadImage"></input>
       </div>
 
-      <input name="searchQuery" type="input" value="seville"></input>
-      <button data-action="search-coco-material" type="button">search</button>
+      <div class="image-url">
+        <label for="imageUrlInput">URL de la imagen:</label>
+        <input id="imageUrlInput" name="imageURL" type="input"></input>
+        <button id="imageUrlInputButton" class="button">Upload</button>
+      </div>
 
+      <div class="coco-material-search">
+        <label for="cocomaterialSearchInput">Busca en Cocomaterial:</label>
+        <input id="cocomaterialSearchInput" name="searchQuery" type="input"></input>
+      </div>
       <ul class="coco-material-results">
       </ul>
     </div>

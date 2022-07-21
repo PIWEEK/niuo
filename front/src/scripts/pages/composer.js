@@ -141,7 +141,7 @@ const initAddCard = () => {
 };
 
 const updateImageSlotFile = async (event) => {
-  const input = event.currentTarget;
+  const input = event.target;
 
   if (popupData) {
     const {scrapbookId, page, index} = popupData;
@@ -154,6 +154,7 @@ const updateImageSlotFile = async (event) => {
 
     document.querySelector(".popup-wrapper").style.display = "none";
     window.popupData = null;
+    event.target.value = "";
   }
 };
 
@@ -190,34 +191,45 @@ const initPopupHandlers = () => {
 
   document.querySelector(".upload-image input").addEventListener("change", updateImageSlotFile);
 
-  const btnSearch = document.querySelector("[data-action='search-coco-material']");
+  const imageUrlInputButton = document.getElementById("imageUrlInputButton");
+  const imageUrlInput = document.getElementById("imageUrlInput");
+  imageUrlInputButton.addEventListener("click", async (event) => {
+    const imageUrl = imageUrlInput.value;
+    await updateImageSlotUrl(imageUrl);
+    imageUrlInput.value = "";
+  });
 
-  btnSearch.addEventListener("click", async (event) => {
+  const searchInput = document.querySelector("[name='searchQuery']");
 
-    const input = document.querySelector("[name='searchQuery']");
-    const searchQuery = input.value || "";
+  searchInput.addEventListener("keyup", async (event) => {
+    const searchQuery = searchInput.value || "";
 
     if (searchQuery !== "") {
-
       const result = await fetch(`https://cocomaterial.com/api/vectors/?tags=${searchQuery}`);
       const data = await result.json()
 
       const resultNode = document.querySelector(".coco-material-results");
-      resultNode.innerHTML = "";
 
-      for (const current of data.results) {
-        const node = document.createElement("li");
-        const img = document.createElement("img");
+      if (data.results.length === 0) {
+        resultNode.innerHTML = "<div class='empty'>No se ha encontrado nada</div>";
 
-        img.src = current.coloredSvg || current.svg;
+      } else {
+        resultNode.innerHTML = "";
+        for (const current of data.results) {
+          const node = document.createElement("li");
+          const img = document.createElement("img");
 
-        node.append(img);
-        resultNode.append(node);
+          img.src = current.coloredSvg || current.svg;
 
-        node.addEventListener("click", () => updateImageSlotUrl(img.src));
+          node.append(img);
+          resultNode.append(node);
+
+          node.addEventListener("click", () => updateImageSlotUrl(img.src));
+        }
       }
     }
   });
+
 }
 
 

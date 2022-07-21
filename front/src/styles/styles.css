@@ -640,27 +640,32 @@ header {
   width: 800px;
   height: 600px;
   display: grid;
-  grid-template-areas: "upload upload" "input search" "result result";
-  grid-template-columns: 1fr 100px;
-  grid-template-rows: 30px 30px 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px 30px 30px 1fr;
   padding: 1em;
-  gap: 0.5em;
+  gap: 2em;
 
   & .upload-image {
-    grid-area: upload;
+    & [type='file'] {
+      display: none;
+    }
   }
 
   & input {
-    grid-area: input;
     padding: 4px 16px;
   }
 
-  & button {
-    grid-area: search;
+  & .image-url, & .coco-material-search {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+
+    & input {
+      flex: 1;
+    }
   }
 
   & .coco-material-results {
-    grid-area: result;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin: 0;
