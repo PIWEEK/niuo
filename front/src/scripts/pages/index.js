@@ -1,4 +1,4 @@
-import { listScrapbooks, createScrapbook } from "../endpoints/scrapbooks.endpoint";
+import { listScrapbooks, createScrapbook, duplicateScrapbook, deleteScrapbook } from "../endpoints/scrapbooks.endpoint";
 
 const buildCard = (sb) => {
   const composerUrl = `/composer.html?id=${sb.id}`;
@@ -33,27 +33,33 @@ const addScrapbookToList = (sb) => {
   li.innerHTML = buildCard(sb);
 
   li.querySelector(".ac-share").addEventListener("click", () => {
-    console.log("share", sb.id);
+    location.href = `/composer.html?id=${sb.id}`;
   });
   
-  li.querySelector(".ac-duplicate").addEventListener("click", () => {
-    console.log("duplicate", sb.id);
+  li.querySelector(".ac-duplicate").addEventListener("click", async () => {
+    await duplicateScrapbook(sb.id);
+    loadScrapbooks();
   });
   
-  li.querySelector(".ac-delete").addEventListener("click", () => {
-    console.log("delete", sb.id);
+  li.querySelector(".ac-delete").addEventListener("click", async () => {
+    await deleteScrapbook(sb.id);
+    loadScrapbooks();
   });
   
   scrapbooksList.append(li);
 };
 
-const loadScrapbooks = async () => {
+const initHandlers = () => {
   const elems = document.querySelectorAll("[data-action='new-scrapbook']");
 
   for (const elem of elems) {
     elem.addEventListener("click", handleNewScrapbook);
   }
-  
+};
+
+const loadScrapbooks = async () => {
+  document.getElementById("scrapbooks-list").innerHTML = "";
+
   const scrapbooks = await listScrapbooks();
 
   if (scrapbooks.length === 0) {
@@ -79,5 +85,5 @@ const handleNewScrapbook = async (event) => {
   location.href = `/composer.html?id=${sb.id}`;
 }
 
-
+initHandlers();
 loadScrapbooks();

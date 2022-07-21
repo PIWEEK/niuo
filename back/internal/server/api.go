@@ -328,33 +328,34 @@ func (a *App) DuplicateScrapbook(w http.ResponseWriter, r *http.Request) {
 		pages := a.retrievePages(scrapbook.ID)
 		slots := a.retrieveSlots(scrapbook.ID)
 
+		scrapbook.Base = Base{}
+		a.saveScrapbook(&scrapbook)
+
 		for _, page := range pages {
 			pageId := page.ID
 
 			page.Base = Base{}
+			page.ScrapbookID = scrapbook.ID
 			a.savePage(&page)
 
 			for _, slot := range slots {
 				if slot.PageId == pageId {
-					slotNumber := slot.NumSlot
-
 					slot.Base = Base{}
 					slot.PageId = page.ID
 					a.saveSlot(&slot)
-
-					if slot.Type == "IMAGE" && slot.Status == "FILLED" {
-						var slotImage SlotImageDB
-						a.getSlotImage(&slotImage, pageId, slotNumber)
-
-						slotImage.PageId = page.ID
-						a.saveSlotImage(&slotImage)
-					}
 				}
 			}
-		}
 
-		scrapbook.Base = Base{}
-		a.saveScrapbook(&scrapbook)
+			var slotImages []SlotImageDB
+			a.DB.
+				Where("page_id = ?", pageId).
+				Find(&slotImages)
+
+			for _, slotImage := range slotImages {
+				slotImage.PageId = page.ID
+				a.saveSlotImage(&slotImage)
+			}
+		}
 
 		result := scrapbook.FormatAdvanced(pages, slots)
 		respondWithJSON(w, 200, result)

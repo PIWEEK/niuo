@@ -63,10 +63,21 @@ const deleteScrapbook = async (id) => {
   return;
 };
 
+const duplicateScrapbook = async (id) => {
+  const url = `${config.apiUrl}/scrapbooks/${id}/duplicate`;
+
+  await fetch(url, {
+    method: "POST",
+    ...options,
+  });
+  return;
+};
+
 export {
   listScrapbooks,
   createScrapbook,
   getScrapbook,
   modifyScrapbook,
   deleteScrapbook,
+  duplicateScrapbook,
 };
