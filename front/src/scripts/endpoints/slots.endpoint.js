@@ -26,6 +26,18 @@ const uploadImage = async (scrapbookId, pageId, slotId, image) => {
   return res.json();
 };
 
+const uploadImageUrl = async (scrapbookId, pageId, slotId, url) => {
+  const apiURL = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}/${slotId}/imageUrl`;
+
+  const res = await fetch(apiURL, {
+    method: "POST",
+    body: JSON.stringify({ url }),
+    ...options,
+  });
+
+  return res.json();
+};
+
 const uploadText = async (scrapbookId, pageId, slotId, text) => {
   const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}/${slotId}/text`;
 
@@ -50,4 +62,4 @@ const uploadData = (scrapbookId, pageId, slotId, data) => {
     .then((response) => console.log("Success:", response));
 };
 
-export { uploadImage, uploadText, uploadData };
+export { uploadImage, uploadImageUrl, uploadText, uploadData };

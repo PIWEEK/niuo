@@ -43,6 +43,9 @@ func (a *App) initRoutes() {
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/image", a.SetSlotImage).Methods("POST")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/image", a.GetSlotImage).Methods("GET")
 
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/imageUrl", a.Empty).Methods("OPTIONS")
+	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/imageUrl", a.SetSlotImageURL).Methods("POST")
+
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/text", a.Empty).Methods("OPTIONS")
 	apiRoutes.HandleFunc("/scrapbooks/{scrapbookId}/pages/{pageNumber}/{slotNumber}/text", a.SetSlotText).Methods("POST")
 

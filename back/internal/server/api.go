@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"io"
 	"strconv"
 	"encoding/json"
@@ -243,16 +242,14 @@ func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 
 			file, fileHeader, err := r.FormFile("file")
 
-			fmt.Printf("??%v", err)
-
 			if err != nil {
 				respondWithError(w, 404, "Cannot read the file")
-				fmt.Printf("Cannot read the file\n")
 				return
 			}
 
 			fileName := fileHeader.Filename
 			size := fileHeader.Size
+			contentType := fileHeader.Header["Content-Type"][0]
 
 			defer file.Close()
 
@@ -271,10 +268,63 @@ func (a *App) SetSlotImage(w http.ResponseWriter, r *http.Request) {
 				PageId: page.ID,
 				Slot: slotNumber,
 				Data: data,
+				ContentType: contentType,
 			}
 
 			a.saveSlotImage(&slotImage)
-			respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size })
+			respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size, "contentType": contentType })
+		}
+	}
+}
+
+func (a *App) SetSlotImageURL(w http.ResponseWriter, r *http.Request) {
+	scrapbook, ok := a.findScrapbook(w, r)
+
+	if ok {
+		page, ok := a.findPage(w, r, scrapbook)
+
+		if ok {
+			vars := mux.Vars(r)
+			slotNumber, _ := strconv.Atoi(vars["slotNumber"])
+
+			var s SlotImageUrlInput
+			if decode(w, r, &s) {
+
+				response, err := http.Get(s.Url)
+
+				if err != nil {
+					respondWithError(w, 404, "Cannot read the file")
+					return
+				}
+
+				defer response.Body.Close()
+
+				data, err := io.ReadAll(response.Body)
+
+				if err != nil {
+					respondWithError(w, 404, "Cannot read the file data")
+					return
+				}
+
+				fileName := s.Url
+				size := response.ContentLength
+				contentType := response.Header["Content-Type"][0]
+
+
+				slot := a.getSlotByNumber(page.ID, slotNumber)
+				slot.Status = "FILLED"
+				a.saveSlot(&slot)
+
+				slotImage := SlotImageDB {
+					PageId: page.ID,
+					Slot: slotNumber,
+					Data: data,
+					ContentType: contentType,
+				}
+
+				a.saveSlotImage(&slotImage)
+				respondWithJSON(w, 200, map[string]any{ "fileName": fileName, "size": size, "contentType": contentType })
+			}
 		}
 	}
 }
@@ -292,6 +342,9 @@ func (a *App) GetSlotImage(w http.ResponseWriter, r *http.Request) {
 			var slotImage SlotImageDB
 			a.getSlotImage(&slotImage, page.ID, slotNumber)
 
+			if slotImage.ContentType != "" {
+				w.Header().Add("Content-Type", slotImage.ContentType)
+			}
 			w.WriteHeader(200)
 			w.Write(slotImage.Data)
 		}

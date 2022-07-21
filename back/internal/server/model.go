@@ -62,4 +62,5 @@ type SlotImageDB struct {
 	Slot int         `gorm:"primaryKey"`
 
 	Data []byte `gorm:"type:bytea"`
+	ContentType string
 }

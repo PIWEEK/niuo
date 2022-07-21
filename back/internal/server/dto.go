@@ -41,3 +41,7 @@ type SlotDataOutput struct {
 	SlotDataInput
 	State string `default:"EMPTY" json:"state"`
 }
+
+type SlotImageUrlInput struct {
+	Url string `json:"url"`
+}

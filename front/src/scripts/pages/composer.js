@@ -1,5 +1,7 @@
 import { getScrapbook } from "../endpoints/scrapbooks.endpoint";
 import { createPage } from "../endpoints/pages.endpoint";
+import { uploadImage, uploadImageUrl } from "../endpoints/slots.endpoint";
+
 import { buildActivityPage } from "../types/activity-checklist";
 import { buildCoverPage } from "../types/cover";
 
@@ -100,7 +102,7 @@ const scrolltoCard = (event) => {
 const initAddCard = () => {
   const addCardBtn = document.getElementById("add-card");
   const cardPopup = document.querySelector(".new-card-popup");
-  
+
   addCardBtn.addEventListener("click", (event) => {
     if (cardPopup.style.display === "grid") {
       cardPopup.style.display = "none";
@@ -130,10 +132,89 @@ const initAddCard = () => {
       const card = document.querySelector(`.body-inner .body-content:last-child`)
       card.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
     });
-
-   
   }
 };
+
+const updateImageSlotFile = async (event) => {
+  const input = event.currentTarget;
+
+  if (popupData) {
+    const {scrapbookId, page, index} = popupData;
+    await uploadImage(scrapbookId, page, index, event.target.files[0]);
+
+    const img = document.querySelector(`[for='checklist-input-image-${page}-${index}'] img`)
+    if (img){
+      img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
+    }
+
+    document.querySelector(".popup-wrapper").style.display = "none";
+    window.popupData = null;
+  }
+};
+
+const updateImageSlotUrl = async (url) => {
+  if (popupData) {
+    const {scrapbookId, page, index} = popupData;
+
+    await uploadImageUrl(scrapbookId, page, index, url);
+
+    const img = document.querySelector(`[for='checklist-input-image-${page}-${index}'] img`)
+    if (img){
+      img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
+    }
+
+    document.querySelector(".popup-wrapper").style.display = "none";
+    window.popupData = null;
+  }
+};
+
+const initPopupHandlers = () => {
+  const background = document.querySelector(".popup-wrapper .background");
+
+  background.addEventListener("click", (event) => {
+    document.querySelector(".popup-wrapper").style.display = "none";
+    window.popupData = null;
+  });
+
+  document.addEventListener("keyup", (event) => {
+    if (event.key === "Escape") {
+      document.querySelector(".popup-wrapper").style.display = "none";
+      window.popupData = null;
+    }
+  });
+
+  document.querySelector(".upload-image input").addEventListener("change", updateImageSlotFile);
+
+  const btnSearch = document.querySelector("[data-action='search-coco-material']");
+
+  btnSearch.addEventListener("click", async (event) => {
+
+    const input = document.querySelector("[name='searchQuery']");
+    const searchQuery = input.value || "";
+
+    if (searchQuery !== "") {
+
+      const result = await fetch(`https://cocomaterial.com/api/vectors/?tags=${searchQuery}`);
+      const data = await result.json()
+
+      const resultNode = document.querySelector(".coco-material-results");
+      resultNode.innerHTML = "";
+
+      for (const current of data.results) {
+        const node = document.createElement("li");
+        const img = document.createElement("img");
+
+        img.src = current.coloredSvg || current.svg;
+
+        node.append(img);
+        resultNode.append(node);
+
+        node.addEventListener("click", () => updateImageSlotUrl(img.src));
+      }
+    }
+  });
+}
+
 
 // INIT
 
@@ -146,6 +227,7 @@ const init = async () => {
   initMainCards();
   initPrintListener();
   initAddCard();
+  initPopupHandlers();
 };
 
 const update = async() => {
@@ -153,7 +235,7 @@ const update = async() => {
   const pageCard = document.querySelector('[data-query="template-card"]');
   pageCard.innerHTML = '';
   pagesList.innerHTML = '';
-  
+
   initScrapbookData();
   initPagesList();
   initMainCards();

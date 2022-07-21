@@ -14,7 +14,18 @@ const initInputListeners = (element) => {
   });
 
   imageSlots.forEach((imageSlot) => {
-    imageSlot.addEventListener("change", updateImageSlot);
+    configPopup(imageSlot);
+  });
+};
+
+const configPopup = (elem) => {
+  const scrapbookId = elem.getAttribute("data-scrapbook");
+  const page = elem.getAttribute("data-page");
+  const index = elem.getAttribute("data-index");
+
+  elem.addEventListener("click", (event) => {
+    document.querySelector(".popup-wrapper").style.display = "block";
+    window.popupData = { scrapbookId, page, index };
   });
 };
 
@@ -24,18 +35,6 @@ const updateTextSlot = async (event) => {
   const index = event.currentTarget.getAttribute("data-index");
   const text = event.currentTarget.value;
   await uploadText(scrapbook, page, index, text);
-};
-
-const updateImageSlot = async (event) => {
-  const input = event.currentTarget;
-  const scrapbook = input.getAttribute("data-scrapbook");
-  const page = input.getAttribute("data-page");
-  const index = input.getAttribute("data-index");
-  await uploadImage(scrapbook, page, index, event.target.files[0]);
-
-  input.parentElement.querySelector(
-    "img"
-  ).src = `http://localhost:8000/api/scrapbooks/${scrapbook}/pages/${page}/${index}/image`;
 };
 
 const buildActivityPage = (element, page, pageIndex, scrapbook) => {
@@ -57,16 +56,16 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl = document.createElement("label");
       slotEl.setAttribute("for", `checklist-input-image-${pageIndex}-${index}`);
       slotEl.classList.add("checklist-image-wrapper");
-      // Create Input
-      inputEl = document.createElement("input");
-      inputEl.setAttribute("type", "file");
+
+
+      inputEl = document.createElement("button");
       inputEl.setAttribute("id", `checklist-input-image-${pageIndex}-${index}`);
       inputEl.setAttribute("data-query", "checklist-slot-input-image");
       inputEl.setAttribute("data-scrapbook", scrapbook.id);
       inputEl.setAttribute("data-page", pageIndex);
       inputEl.setAttribute("data-index", index);
-      inputEl.setAttribute("maxlenght", 30);
       inputEl.classList.add("checklist-input-image");
+
       // Create Image
       imgEl = document.createElement("img");
       imgEl.classList.add("image");
