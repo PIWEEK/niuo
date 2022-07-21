@@ -19,7 +19,6 @@ const initInputListeners = (element) => {
 };
 
 const updateTextSlot = async (event) => {
-  console.log(event);
   const scrapbook = event.currentTarget.getAttribute("data-scrapbook");
   const page = event.currentTarget.getAttribute("data-page");
   const index = event.currentTarget.getAttribute("data-index");
@@ -86,11 +85,14 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl = document.createElement("input");
       slotEl.classList.add("text");
       slotEl.setAttribute("type", "text");
+      slotEl.setAttribute("placeholder", "Añadir cosa");
       slotEl.setAttribute("data-query", "checklist-slot-input-text");
       slotEl.setAttribute("data-scrapbook", scrapbook.id);
       slotEl.setAttribute("data-page", pageIndex);
       slotEl.setAttribute("data-index", index);
-      slotEl.value = slot.text;
+      if (!!slot.text) {
+        slotEl.value = slot.text;
+      }
     }
     grid.append(slotEl);
   });
