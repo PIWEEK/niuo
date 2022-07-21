@@ -78,7 +78,7 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl.append(imgEl);
 
       if (slot.state === "EMPTY") {
-        imgEl.setAttribute("src", "");
+        imgEl.setAttribute("src", "/checklist-image-placeholder.svg");
       } else {
          imgEl.setAttribute(
            "src",

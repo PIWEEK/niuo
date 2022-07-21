@@ -273,7 +273,7 @@ header {
       border-radius: 4px;
       padding: var(--space-2);
       text-align: center;
-      block-size: 650px;
+      block-size: 900px;
       aspect-ratio: 1.41 / 1;
       flex-shrink: 0;
 
@@ -286,6 +286,7 @@ header {
         font-family: var(--font-ligature);
         top: var(--space-1);
         right: var(--space-1);
+        font-size: 18px;
       }
     }
   }
@@ -299,7 +300,7 @@ header {
 
 .tpl-activity_checklist {
   & .intro {
-    padding: var(--space-1) 0;
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-2);
   }
 
   & .checklist {
@@ -314,7 +315,7 @@ header {
     & .grid-end {
       align-items: center;
       display: grid;
-      gap: var(--space-1);
+      gap: var(--space-2);
       grid-template-columns: auto 1fr;
     }
 
@@ -338,16 +339,20 @@ header {
     }
 
     & .image {
-      width: 100px;
-      height: 100px;
+      width: 160px;
+      height: 160px;
       flex-shrink: 0;
-      background-color: cadetblue;
-      margin-right: var(--space-1);
     }
     & .text {
       font-size: 2.4em;
       font-family: var(--font-ligature);
       text-align: left;
+    }
+
+    & .checklist-image-wrapper {
+      width: 160px;
+      height: 160px;
+      background: url("/src/assets/blob-1.svg") no-repeat center;
     }
   }
 }
