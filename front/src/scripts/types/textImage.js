@@ -35,7 +35,13 @@ const updateImageSlot = async (event) => {
 const buildTextImagePage = (pageEl, page, pageIndex, scrapbook) => {
   console.log(page);
   pageEl.innerHTML = `
-  <div class="summary">El viaje de ${scrapbook.who} a ${scrapbook.where}</div>
+  <div class="summary">
+    El viaje de ${scrapbook.who} a ${scrapbook.where}
+    <img src="${new URL(
+      "../../assets/pin.svg",
+      import.meta.url
+    )}" class="image" alt="" />
+  </div>
   <div class="text-image-tpl-wrapper">
     <div class="text-image-tpl-text">
       <p class="font-ligature intro">

@@ -325,10 +325,13 @@ header {
     padding: 0.5em 1em 1em 2em;
     right: var(--space-1);
     font-size: 16px;
-    background-image: url("/src/assets/pin.svg");
-    background-position: left top;
-    background-repeat: no-repeat;
     background-size: 20px;
+    & img {
+      position: absolute;
+      width: 20px;
+      left: 0;
+      top: 0;
+    }
   }
 
   & .bg-ilu {

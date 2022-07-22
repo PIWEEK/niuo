@@ -1,7 +1,13 @@
 const buildTransportPage = (pageEl, page, index, scrapbook) => {
 
     pageEl.innerHTML = `
-    <div class="summary">El viaje de ${scrapbook.who} a ${scrapbook.where}</div>
+    <div class="summary">
+      El viaje de ${scrapbook.who} a ${scrapbook.where}
+      <img src="${new URL(
+        "../../assets/pin.svg",
+        import.meta.url
+      )}" class="image" alt="" />
+    </div>
     <p class="font-ligature fs-2 intro">
     ¿En qué medios de transporte has montado en tu viaje?<br>Rodéalos y si quieres puedes colorearlos también.
     </p>
