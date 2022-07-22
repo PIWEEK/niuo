@@ -194,9 +194,12 @@ const updateImageSlotUrl = async (url) => {
 
     await uploadImageUrl(scrapbookId, page, index, url);
 
-    const imgs = document.querySelectorAll(
-      `[for='checklist-input-image-${page}-${index}'] img`
-    );
+    let imgs = document.querySelectorAll(`[for='checklist-input-image-${page}-${index}'] img`)
+    for (const img of imgs) {
+      img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
+    }
+
+    imgs = document.querySelectorAll(`[for='input-image-${page}-${index}'] img`)
     for (const img of imgs) {
       img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
     }
@@ -255,7 +258,7 @@ const initPopupHandlers = () => {
           const node = document.createElement("li");
           const img = document.createElement("img");
 
-          img.src = current.coloredSvg || current.svg;
+          img.src = current.svg;
 
           node.append(img);
           resultNode.append(node);

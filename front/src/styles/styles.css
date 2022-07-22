@@ -369,6 +369,35 @@ header {
     top: 30px;
     left: 50px;
   }
+
+  & .input-image {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    visibility: hidden;
+    width: 140px;
+    height: 140px;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  & .image {
+    height: 340px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 40px;
+  }
+
+  & .image-wrapper {
+    width: 340px;
+    height: 340px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 40px;
+
+    background: url("/src/assets/blob-1.svg") no-repeat center;
+    background-size: 340px;
+  }
 }
 
 .tpl-text_image {
@@ -389,6 +418,10 @@ header {
     }
   }
 
+  & .image-decoration {
+    position: relative;
+  }
+
   & .text-image-tpl-text {
     flex: 1;
     display: flex;
@@ -399,10 +432,15 @@ header {
   & .text-image-tpl-textarea {
     flex: 1;
     margin-left: 3rem;
+
+    &:hover {
+      outline: 1px solid #ddd;
+    }
   }
 
   & .text-image-tpl-image-wrapper {
-    position: relative;
+    position: absolute;
+    top: 0;
     display: block;
   }
 
@@ -482,7 +520,10 @@ header {
     & .transport {
       width: 200px;
       height: 92px;
-      z-index: 2;
+      background-image: url("/src/assets/transport-plane.svg");
+      background-position: left top;
+      background-repeat: no-repeat;
+      background-size: 200px 92px;
     }
   }
 }
@@ -593,6 +634,10 @@ header {
     height: 60px;
     font-size: 20px;
   }
+}
+
+.index-placeholder .btn-big {
+  margin: auto;
 }
 
 .cards-wrapper .cards-inner #add-card.card {
