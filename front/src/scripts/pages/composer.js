@@ -61,36 +61,36 @@ const buildCard = (pageCard, page, index) => {
   pageEl.setAttribute("data-index", index);
 
   switch (page.type) {
-  case "cover":
-    buildCoverPage(pageEl, scrapbook);
-    break;
+    case "cover":
+      buildCoverPage(pageEl, scrapbook);
+      break;
 
-  case "activity_checklist":
-    buildActivityPage(pageEl, page, index, scrapbook);
-    break;
+    case "activity_checklist":
+      buildActivityPage(pageEl, page, index, scrapbook);
+      break;
 
-  case "emotions":
-    buildEmotionsPage(pageEl, page, index, scrapbook);
-    break;
+    case "emotions":
+      buildEmotionsPage(pageEl, page, index, scrapbook);
+      break;
 
-  case "transport":
-    buildTransportPage(pageEl, page, index, scrapbook);
-    break;
+    case "transport":
+      buildTransportPage(pageEl, page, index, scrapbook);
+      break;
 
-  case "color":
-    buildColorPage(pageEl, page, index, scrapbook);
-    break;
+    case "color":
+      buildColorPage(pageEl, page, index, scrapbook);
+      break;
 
-  case "text_image":
-    buildTextImagePage(pageEl, page, index, scrapbook);
-    break;
+    case "text_image":
+      buildTextImagePage(pageEl, page, index, scrapbook);
+      break;
 
-  default:
-    console.error("this type does not exist");
-    break;
+    default:
+      console.error("this type does not exist");
+      break;
   }
   pageCard.append(pageEl);
-}
+};
 
 const initMainCards = () => {
   const pageCard = document.querySelector('[data-query="template-card"]');
@@ -109,9 +109,20 @@ const initCardListener = () => {
 };
 
 const scrolltoCard = (event) => {
+  document
+    .querySelectorAll('[data-query="page-card"]')
+    .forEach((card) => card.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+
   const idx = event.currentTarget.getAttribute("data-index");
-  const card = document.querySelector(`.body-inner .body-content[data-index='${idx}']`)
-  card.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+  const card = document.querySelector(
+    `.body-inner .body-content[data-index='${idx}']`
+  );
+  card.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "center",
+  });
 };
 
 const initAddCard = () => {
@@ -127,25 +138,32 @@ const initAddCard = () => {
   });
 
   document.addEventListener("click", (event) => {
-    if (!addCardBtn.contains(event.target) &&
-        !cardPopup.contains(event.target)) {
+    if (
+      !addCardBtn.contains(event.target) &&
+      !cardPopup.contains(event.target)
+    ) {
       cardPopup.style.display = "none";
     }
   });
 
   const newCardButtons = document.querySelectorAll(".new-card-popup .card");
   for (const cardButton of newCardButtons) {
-
     cardButton.addEventListener("click", async (event) => {
       const result = await createPage(scrapbook.id, {
-        type: cardButton.getAttribute("data-type")
+        type: cardButton.getAttribute("data-type"),
       });
       scrapbook = result;
       cardPopup.style.display = "none";
       update();
 
-      const card = document.querySelector(`.body-inner .body-content:last-child`)
-      card.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+      const card = document.querySelector(
+        `.body-inner .body-content:last-child`
+      );
+      card.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
     });
   }
 };
@@ -154,10 +172,12 @@ const updateImageSlotFile = async (event) => {
   const input = event.target;
 
   if (popupData) {
-    const {scrapbookId, page, index} = popupData;
+    const { scrapbookId, page, index } = popupData;
     await uploadImage(scrapbookId, page, index, event.target.files[0]);
 
-    const imgs = document.querySelectorAll(`[for='checklist-input-image-${page}-${index}'] img`)
+    const imgs = document.querySelectorAll(
+      `[for='checklist-input-image-${page}-${index}'] img`
+    );
     for (const img of imgs) {
       img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
     }
@@ -170,11 +190,13 @@ const updateImageSlotFile = async (event) => {
 
 const updateImageSlotUrl = async (url) => {
   if (popupData) {
-    const {scrapbookId, page, index} = popupData;
+    const { scrapbookId, page, index } = popupData;
 
     await uploadImageUrl(scrapbookId, page, index, url);
 
-    const imgs = document.querySelectorAll(`[for='checklist-input-image-${page}-${index}'] img`)
+    const imgs = document.querySelectorAll(
+      `[for='checklist-input-image-${page}-${index}'] img`
+    );
     for (const img of imgs) {
       img.src = `http://localhost:8000/api/scrapbooks/${scrapbookId}/pages/${page}/${index}/image`;
     }
@@ -199,7 +221,9 @@ const initPopupHandlers = () => {
     }
   });
 
-  document.querySelector(".upload-image input").addEventListener("change", updateImageSlotFile);
+  document
+    .querySelector(".upload-image input")
+    .addEventListener("change", updateImageSlotFile);
 
   const imageUrlInputButton = document.getElementById("imageUrlInputButton");
   const imageUrlInput = document.getElementById("imageUrlInput");
@@ -215,14 +239,16 @@ const initPopupHandlers = () => {
     const searchQuery = searchInput.value || "";
 
     if (searchQuery !== "") {
-      const result = await fetch(`https://cocomaterial.com/api/vectors/?tags=${searchQuery}`);
-      const data = await result.json()
+      const result = await fetch(
+        `https://cocomaterial.com/api/vectors/?tags=${searchQuery}`
+      );
+      const data = await result.json();
 
       const resultNode = document.querySelector(".coco-material-results");
 
       if (data.results.length === 0) {
-        resultNode.innerHTML = "<div class='empty'>No se ha encontrado nada</div>";
-
+        resultNode.innerHTML =
+          "<div class='empty'>No se ha encontrado nada</div>";
       } else {
         resultNode.innerHTML = "";
         for (const current of data.results) {
@@ -239,9 +265,7 @@ const initPopupHandlers = () => {
       }
     }
   });
-
-}
-
+};
 
 // INIT
 
@@ -257,11 +281,11 @@ const init = async () => {
   initPopupHandlers();
 };
 
-const update = async() => {
+const update = async () => {
   const pagesList = document.querySelector('[data-query="pages-list"]');
   const pageCard = document.querySelector('[data-query="template-card"]');
-  pageCard.innerHTML = '';
-  pagesList.innerHTML = '';
+  pageCard.innerHTML = "";
+  pagesList.innerHTML = "";
 
   initScrapbookData();
   initPagesList();
