@@ -439,13 +439,10 @@ header {
   }
 
   & .text-image-tpl-image-wrapper {
-    position: absolute;
-    top: 0;
     display: block;
   }
 
   & .text-image-tpl-file {
-    position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
     visibility: hidden;
@@ -467,6 +464,8 @@ header {
     inset-inline-start: 7px;
     inline-size: 270px;
     aspect-ratio: 16 / 9;
+    width: 270px;
+    height: 152px;
     clip-path: polygon(
       96% 3%,
       87% 1%,
@@ -520,10 +519,6 @@ header {
     & .transport {
       width: 200px;
       height: 92px;
-      background-image: url("/src/assets/transport-plane.svg");
-      background-position: left top;
-      background-repeat: no-repeat;
-      background-size: 200px 92px;
     }
   }
 }

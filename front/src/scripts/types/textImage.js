@@ -54,7 +54,7 @@ const buildTextImagePage = (pageEl, page, pageIndex, scrapbook) => {
     <p class="font-ligature intro">
       ¡Qué ilusión! Nos vamos a <span class="where">${scrapbook.where}<span>
     </p>
-    <textarea data-query="text-image-tpl-textarea" class="text-image-tpl-textarea" aria-label="texto sobre el viaje" data-scrapbook="${scrapbook.id}" data-page="${pageIndex}" data-index="1" placeholder="Escribe aquí">${page.slots[1].text ? page.slots[1].text : ""}</textarea>
+    <textarea data-query="text-image-tpl-textarea" class="font-ligature text-image-tpl-textarea" aria-label="texto sobre el viaje" data-scrapbook="${scrapbook.id}" data-page="${pageIndex}" data-index="1" placeholder="Escribe aquí">${page.slots[1].text ? page.slots[1].text : ""}</textarea>
   `;
   wrapper.append(intro);
 
