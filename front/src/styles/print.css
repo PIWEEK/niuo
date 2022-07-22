@@ -39,6 +39,7 @@
         &:nth-child(even)::after {
           clear: both;
           page-break-after: always;
+          page-break-inside: avoid;
         }
       }
     }
