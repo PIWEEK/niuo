@@ -6,19 +6,41 @@ const buildTransportPage = (pageEl, page, index, scrapbook) => {
     ¿En qué medios de transporte has montado en tu viaje?<br>Rodéalos y si quieres puedes colorearlos también.
     </p>
     <div class="transport-list">
-        <div class="transport t-plane"></div>
+        <img class="transport t-plane" src="${new URL(
+            "../../assets/transport-plane.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">barco</div>
-        <div class="transport t-boat"></div>
+        <img class="transport t-boat" src="${new URL(
+            "../../assets/transport-boat.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">avión</div>
-        <div class="transport t-scooter"></div>
+        <img class="transport t-scooter" src="${new URL(
+            "../../assets/transport-scooter.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">patinete</div>
-        <div class="transport t-train"></div>
+        <img class="transport t-train" src="${new URL(
+            "../../assets/transport-train.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">tren</div>
-        <div class="transport t-bus"></div>
+        <img class="transport t-bus" src="${new URL(
+            "../../assets/transport-bus.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">autobus</div>
-        <div class="transport t-car"></div>
+        <img class="transport t-car" src="${new URL(
+            "../../assets/transport-car.svg",
+            import.meta.url
+          )}" alt="">
         <div class="t-name">coche</div>
     </div>
+    <img class="bg-ilu ilu-quokka-flag" src="${new URL(
+      "../../assets/quokka_flag.svg",
+      import.meta.url
+    )}" alt="">
       `;
   };
   

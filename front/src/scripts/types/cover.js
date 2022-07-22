@@ -42,6 +42,14 @@ const buildCoverPage = (element, scrapbook) => {
       <div>
         <input class="font-ligature fs-4" type="text" id="people" data-query="destination-child" value="${scrapbook.who}">
       </div>
+      <img class="bg-ilu ilu-quokka" src="${new URL(
+        "../../assets/quokka_travel.svg",
+        import.meta.url
+      )}" alt="">
+      <img class="bg-ilu ilu-plane" src="${new URL(
+        "../../assets/paper_plane_flying.svg",
+        import.meta.url
+      )}" alt="">
     `;
 
   element.innerHTML = coverPage;

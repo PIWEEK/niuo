@@ -330,27 +330,40 @@ header {
     background-repeat: no-repeat;
     background-size: 20px;
   }
+
+  & .bg-ilu {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+  }
 }
 
 .tpl-cover {
   display: flex;
   flex-flow: column;
   justify-content: center;
-  background-image: url("/src/assets/quokka_travel.svg"),
-    url("/src/assets/paper_plane_flying.svg");
-  background-position: 10px 0px, right 450px;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 300px, auto;
+  & .ilu-quokka {
+    top: 0;
+    left: 10px;
+    width: 300px;
+  }
+  & .ilu-plane {
+    top: 450px;
+    left: auto;
+    right: 0;
+  }
 }
 
 .tpl-color {
   & .intro {
     font-size: 28px;
     padding: var(--space-2) 4em var(--space-1) 4em;
-    background-image: url("/src/assets/quokka-penpot.svg");
-    background-position: 20px top;
-    background-repeat: no-repeat;
     border-bottom: 2px solid var(--color-stroke);
+  }
+
+  & .ilu-quokka-penpot {
+    top: 30px;
+    left: 50px;
   }
 }
 
@@ -439,11 +452,12 @@ header {
     font-size: 22px;
     padding: 30px 2em 10px 5em;
     min-height: 80px;
-    background-image: url("/src/assets/quokka-travel.svg");
-    background-position: left top;
-    background-repeat: no-repeat;
-    background-size: 130px;
     border-bottom: 2px solid var(--color-stroke);
+  }
+  & .ilu-quokka-flag {
+    top: 20px;
+    left: 30px;
+    width: 150px;
   }
   & .transport-list {
     text-align: left;
@@ -466,16 +480,7 @@ header {
       width: 200px;
       height: 92px;
       z-index: 2;
-      background-image: url("/src/assets/transport-plane.svg");
-      background-position: left top;
-      background-repeat: no-repeat;
-      background-size: 200px 92px;
     }
-    & .t-scooter { background-image: url("/src/assets/transport-scooter.svg"); }
-    & .t-boat { background-image: url("/src/assets/transport-boat.svg"); }
-    & .t-train { background-image: url("/src/assets/transport-train.svg"); }
-    & .t-bus { background-image: url("/src/assets/transport-bus.svg"); }
-    & .t-car { background-image: url("/src/assets/transport-car.svg"); }
   }
 }
 
@@ -484,10 +489,11 @@ header {
     font-size: 22px;
     padding: 30px 2em 10px 7em;
     min-height: 80px;
-    background-image: url("/src/assets/quokka_lens.svg");
-    background-position: left top;
-    background-repeat: no-repeat;
     border-bottom: 2px solid var(--color-stroke);
+  }
+  & .ilu-lens {
+    top: 25px;
+    left: 30px;
   }
 
   & .checklist {
@@ -540,10 +546,11 @@ header {
   & .intro {
     font-size: 22px;
     padding: var(--space-2) 4em var(--space-1) 4em;
-    background-image: url("/src/assets/quokka-default.svg");
-    background-position: left top;
-    background-repeat: no-repeat;
     border-bottom: 2px solid var(--color-stroke);
+  }
+  & .ilu-quokka {
+    top: 30px;
+    left: 30px;
   }
   & .emotions {
     display: flex;

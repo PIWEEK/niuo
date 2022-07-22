@@ -5,6 +5,10 @@ const buildColorPage = (pageEl, page, index, scrapbook) => {
   <p class="font-ligature intro">
   ¡A colorear!
   </p>
+  <img class="bg-ilu ilu-quokka-penpot" src="${new URL(
+    "../../assets/quokka-penpot.svg",
+    import.meta.url
+  )}" alt="">
     `;
 };
 

@@ -28,6 +28,10 @@ const buildEmotionsPage = (pageEl, page, index, scrapbook) => {
       import.meta.url
     )}" alt="">
   </div>
+  <img class="bg-ilu ilu-quokka" src="${new URL(
+    "../../assets/quokka-default.svg",
+    import.meta.url
+  )}" alt="">
     `;
 };
 

@@ -43,6 +43,10 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
   <p class="font-ligature intro">
   ¡Hola ${scrapbook.who}! En tu viaje a ${scrapbook.where} estás viendo cosas muy chulas. Encuentra estas
   y rodéalas con un círculo:</p>
+  <img class="bg-ilu ilu-lens" src="${new URL(
+    "../../assets/quokka_lens.svg",
+    import.meta.url
+  )}" alt="">
   `;
   element.innerHTML = checklistEl;
 
