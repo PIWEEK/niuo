@@ -6,7 +6,6 @@
   @page {
     size: A4 portrait;
     margin: 0;
-    padding: 0;
   }
 
   * {
@@ -31,13 +30,13 @@
 
       & .body-content {
         border: none;
+        clear: both;
 
         &:nth-child(odd) {
           border-bottom: 1px dashed var(--color-dark);
         }
 
         &:nth-child(even)::after {
-          clear: both;
           page-break-after: always;
           page-break-inside: avoid;
         }

@@ -231,8 +231,9 @@ header {
         border: 1px solid var(--color-border);
         padding: var(--space-2);
         text-align: center;
-        block-size: 148mm;
-        inline-size: 210mm;
+        width: 210mm;
+        height: 148.5mm;
+        margin: 0;
         aspect-ratio: 1.41 / 1;
         background-color: #fff;
         border-radius: 4px;
@@ -309,9 +310,9 @@ header {
   border-radius: 4px;
   padding: var(--space-2);
   text-align: center;
-  block-size: 148mm;
-  inline-size: 210mm;
-  aspect-ratio: 1.41 / 1;
+  width: 210mm;
+  height: 148.5mm;
+  margin: 0;
   flex-shrink: 0;
 
   & p {
@@ -449,7 +450,6 @@ header {
   }
 }
 
-
 .tpl-transport {
   & .intro {
     font-size: 22px;
@@ -518,15 +518,15 @@ header {
       inset-block-start: 0;
       inset-inline-start: 0;
       visibility: hidden;
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       z-index: 2;
       cursor: pointer;
     }
 
     & .image {
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       flex-shrink: 0;
       cursor: pointer;
     }
@@ -537,10 +537,8 @@ header {
     }
 
     & .checklist-image-wrapper {
-      width: 140px;
-      height: 140px;
       background: url("/src/assets/blob-1.svg") no-repeat center;
-      background-size: 140px;
+      background-size: 120px;
     }
   }
 }
@@ -713,7 +711,7 @@ header {
   gap: 2em;
 
   & .upload-image {
-    & [type='file'] {
+    & [type="file"] {
       display: none;
     }
   }
@@ -722,7 +720,8 @@ header {
     padding: 4px 16px;
   }
 
-  & .image-url, & .coco-material-search {
+  & .image-url,
+  & .coco-material-search {
     display: flex;
     gap: 1em;
     align-items: center;
