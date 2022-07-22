@@ -41,13 +41,11 @@ const uploadImageUrl = async (scrapbookId, pageId, slotId, url) => {
 const uploadText = async (scrapbookId, pageId, slotId, text) => {
   const url = `${config.apiUrl}/scrapbooks/${scrapbookId}/pages/${pageId}/${slotId}/text`;
 
-  const res = await fetch(url, {
+  await fetch(url, {
     method: "POST",
     body: JSON.stringify({"text": text}),
     ...options,
   });
-
-  return await res.json();
 };
 
 const uploadData = (scrapbookId, pageId, slotId, data) => {

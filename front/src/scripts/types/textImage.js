@@ -1,3 +1,4 @@
+import { configPopup } from "./common";
 import { uploadImage, uploadText } from "../endpoints/slots.endpoint";
 
 const initListeners = (element) => {
@@ -5,10 +6,7 @@ const initListeners = (element) => {
     '[data-query="text-image-tpl-textarea"]'
   );
 
-  const inputFile = element.querySelector('[data-query="text-image-tpl-file"]');
-
   textarea.addEventListener("change", updateTextSlot);
-  inputFile.addEventListener("change", updateImageSlot);
 };
 
 const updateTextSlot = async (event) => {
@@ -33,48 +31,97 @@ const updateImageSlot = async (event) => {
 };
 
 const buildTextImagePage = (pageEl, page, pageIndex, scrapbook) => {
-  console.log(page);
-  pageEl.innerHTML = `
-  <div class="summary">
-    El viaje de ${scrapbook.who} a ${scrapbook.where}
-    <img src="${new URL(
-      "../../assets/pin.svg",
+  const summary = document.createElement("div");
+  summary.classList = "summary";
+  summary.textContent = `El viaje de ${scrapbook.who} a ${scrapbook.where}`;
+  pageEl.append(summary);
+
+  const pinImageEl = document.createElement("img");
+  const pinImageSVG = new URL(
+    "../../assets/pin.svg",
+    import.meta.url
+  );
+  pinImageEl.src = pinImageSVG;
+  summary.append(pinImageEl);
+
+  const wrapper = document.createElement("div");
+  wrapper.classList = "text-image-tpl-wrapper";
+  pageEl.append(wrapper);
+
+  const intro = document.createElement("div");
+  intro.classList = "text-image-tpl-text";
+  intro.innerHTML = `
+    <p class="font-ligature intro">
+      ¡Qué ilusión! Nos vamos a <span class="where">${scrapbook.where}<span>
+    </p>
+    <textarea data-query="text-image-tpl-textarea" class="text-image-tpl-textarea" aria-label="texto sobre el viaje" data-scrapbook="${scrapbook.id}" data-page="${pageIndex}" data-index="1" placeholder="Escribe aquí">${page.slots[1].text ? page.slots[1].text : ""}</textarea>
+  `;
+  wrapper.append(intro);
+
+  const imageWrapper = document.createElement("div");
+  imageWrapper.classList = "text-image-tpl-image";
+
+  const quokkaSVG = new URL(
+    "../../assets/quokka-map.svg",
+    import.meta.url
+  );
+
+  const backgroundSVG = new URL(
+    "../../assets/media_background.svg",
+    import.meta.url
+  );
+
+  const quokkaEl = document.createElement("img");
+  quokkaEl.classList = "text-image-tpl-quokka";
+  quokkaEl.src = quokkaSVG;
+  imageWrapper.append(quokkaEl);
+
+  const imageDecEl = document.createElement("div");
+  imageDecEl.classList = "image-decoration";
+  imageWrapper.append(imageDecEl);
+
+  const backgroundEl = document.createElement("img");
+  backgroundEl.src = backgroundSVG;
+  backgroundEl.classList = "image";
+  imageDecEl.append(backgroundEl);
+
+  const label = document.createElement("label");
+  label.classList = "text-image-tpl-image-wrapper";
+  label.setAttribute("for", `input-image-${pageIndex}-0`);
+  imageDecEl.append(label)
+
+
+  const button = document.createElement("button");
+  button.setAttribute("id", `input-image-${pageIndex}-0`);
+  button.setAttribute("data-query", "slot-input-image");
+  button.setAttribute("data-scrapbook", scrapbook.id);
+  button.setAttribute("data-page", pageIndex);
+  button.setAttribute("data-index", 0);
+  button.classList = "text-image-tpl-file";
+  configPopup(button);
+
+  const imgEl = document.createElement("img");
+  imgEl.classList = "text-image-tpl-image-user slot-image";
+
+  const slot = page.slots[0];
+
+  if (slot.state === "EMPTY") {
+    imgEl.src = new URL(
+      "../../assets/checklist-image-placeholder.svg",
       import.meta.url
-    )}" class="image" alt="" />
-  </div>
-  <div class="text-image-tpl-wrapper">
-    <div class="text-image-tpl-text">
-      <p class="font-ligature intro">
-      ¡Qué ilusión! Nos vamos a
-        <span class="where">${scrapbook.where}<span>
-      </p>
-      <textarea data-query="text-image-tpl-textarea" class="text-image-tpl-textarea" aria-label="texto sobre el viaje" data-scrapbook="${
-        scrapbook.id
-      }" data-page="${pageIndex}" data-index="1">
-        ${page.slots[1].text ? page.slots[1].text : ""}
-      </textarea>
-    </div>
-    <div class="text-image-tpl-image">
-      <img src="${new URL(
-        "../../assets/quokka-map.svg",
-        import.meta.url
-      )}" class="text-image-tpl-quokka" alt="" />
-      <div class="image-decoration">
-        <label class="text-image-tpl-image-wrapper" for="text-image-tpl-file">
-          <img src="${new URL(
-            "../../assets/media_background.svg",
-            import.meta.url
-          )}" class="image" alt="" />
-          <input type="file" class="text-image-tpl-file" id="text-image-tpl-file" data-query="text-image-tpl-file" data-scrapbook="${
-            scrapbook.id
-          }" data-page="${pageIndex}" data-index="0">
-          <img src="http://localhost:8000/api/scrapbooks/${
-            scrapbook.id
-          }/pages/${pageIndex}/0/image" class="text-image-tpl-image-user" data-query="text-image-tpl-image-user" alt="" />
-        </label>
-      </div>
-  </div>
-    `;
+    );
+  } else {
+    imgEl.setAttribute(
+      "src",
+      `http://localhost:8000/api/scrapbooks/${scrapbook.id}/pages/${pageIndex}/0/image`
+    );
+  }
+
+  label.append(button);
+  label.append(imgEl);
+
+  wrapper.append(imageWrapper);
+
   initListeners(pageEl);
 };
 

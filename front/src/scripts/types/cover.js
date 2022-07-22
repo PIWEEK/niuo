@@ -10,25 +10,28 @@ const initCoverListeners = (element, scrapbook) => {
   );
 
   destinationInput.addEventListener("change", (event) => {
-    document.querySelector(
+    const nodes = document.querySelectorAll(
       '[data-query="scrapbook-data-destination"]'
-    ).innerHTML = event.currentTarget.value;
+    );
 
-    modifyScrapbook(scrapbook.id, {
-      ...scrapbook,
-      where: event.currentTarget.value,
-    });
+    for (const node of nodes) {
+      node.innerHTML = event.currentTarget.value;
+    }
+
+    scrapbook.where = event.currentTarget.value
+    modifyScrapbook(scrapbook.id, scrapbook);
   });
 
   destinationChildName.addEventListener("change", (event) => {
     const childNameInput = event.currentTarget.value;
-    document.querySelector('[data-query="scrapbook-data-child"]').innerHTML =
-      childNameInput;
+    const nodes = document.querySelectorAll('[data-query="scrapbook-data-child"]')
 
-    modifyScrapbook(scrapbook.id, {
-      ...scrapbook,
-      who: childNameInput,
-    });
+    for (const node of nodes) {
+      node.innerHTML = childNameInput;
+    }
+
+    scrapbook.who = childNameInput;
+    modifyScrapbook(scrapbook.id, scrapbook);
   });
 };
 

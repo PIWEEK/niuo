@@ -1,3 +1,4 @@
+import { configPopup } from "./common";
 import { uploadImage, uploadText } from "../endpoints/slots.endpoint";
 
 const initInputListeners = (element) => {
@@ -15,17 +16,6 @@ const initInputListeners = (element) => {
 
   imageSlots.forEach((imageSlot) => {
     configPopup(imageSlot);
-  });
-};
-
-const configPopup = (elem) => {
-  const scrapbookId = elem.getAttribute("data-scrapbook");
-  const page = elem.getAttribute("data-page");
-  const index = elem.getAttribute("data-index");
-
-  elem.addEventListener("click", (event) => {
-    document.querySelector(".popup-wrapper").style.display = "block";
-    window.popupData = { scrapbookId, page, index };
   });
 };
 
@@ -66,7 +56,6 @@ const buildActivityPage = (element, page, pageIndex, scrapbook) => {
       slotEl = document.createElement("label");
       slotEl.setAttribute("for", `checklist-input-image-${pageIndex}-${index}`);
       slotEl.classList.add("checklist-image-wrapper");
-
 
       inputEl = document.createElement("button");
       inputEl.setAttribute("id", `checklist-input-image-${pageIndex}-${index}`);
